@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-red: #FF0000;
+  --color-accent: #FF0000;
+  --color-silver: #C0C0C0;
+  --color-silver-dim: #A0A0A0;
+  --color-black: #000000;
+  --font-display: var(--font-syncopate);
+  --font-body: var(--font-inter);
+}
+
+/* ── Base Reset ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #000000;
+  color: #C0C0C0;
+  font-family: var(--font-body);
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* ══════════════════════════════════════════
+   NEON TITLE FLICKER — red glow pulse
+   Applied ONLY to section titles
+   ══════════════════════════════════════════ */
+@keyframes neon-title-flicker {
+
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    text-shadow:
+      0 0 4px rgba(255, 0, 0, 0.8),
+      0 0 11px rgba(255, 0, 0, 0.6),
+      0 0 22px rgba(255, 0, 0, 0.4),
+      0 0 40px rgba(255, 0, 0, 0.2);
+    opacity: 1;
+  }
+
+  20%,
+  24% {
+    text-shadow: none;
+    opacity: 0.7;
+  }
+
+  55% {
+    text-shadow:
+      0 0 2px rgba(255, 0, 0, 0.4),
+      0 0 6px rgba(255, 0, 0, 0.3);
+    opacity: 0.85;
+  }
+}
+
+@utility animate-neon-flicker {
+  animation: neon-title-flicker 4s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════
+   KANJI BREATHING PULSE — deep red subtle glow
+   ══════════════════════════════════════════ */
+@keyframes kanji-breathing {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 30px rgba(77, 0, 0, 0.8)) drop-shadow(0 0 60px rgba(77, 0, 0, 0.4));
+    transform: scale(1);
+  }
+
+  50% {
+    filter: drop-shadow(0 0 50px rgba(77, 0, 0, 1)) drop-shadow(0 0 90px rgba(77, 0, 0, 0.6));
+    transform: scale(1.02);
+  }
+}
+
+@utility animate-kanji-pulse {
+  animation: kanji-breathing 8s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════
+   BLINKING CURSOR — Hacker trailing underscore
+   ══════════════════════════════════════════ */
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+  }
+
+  50% {
+    opacity: 0;
+    text-shadow: none;
+  }
+}
+
+@utility animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ══════════════════════════════════════════
+   SCRAMBLE GLITCH — subtle cyber text shift
+   ══════════════════════════════════════════ */
+@keyframes cyber-glitch {
+
+  0%,
+  97.4% {
+    text-shadow: none;
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  97.5% {
+    text-shadow: 2px 0 0 #FF0000, -2px 0 0 #00FFFF;
+    transform: translateX(-2px);
+    opacity: 0.9;
+  }
+
+  98.0% {
+    text-shadow: -2px 0 0 #FF0000, 2px 0 0 #00FFFF;
+    transform: translateX(2px);
+    opacity: 1;
+  }
+
+  98.5%,
+  100% {
+    text-shadow: none;
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@utility animate-cyber-glitch {
+  animation: cyber-glitch 5s linear infinite;
+}
+
+/* ══════════════════════════════════════════
+   CTA BUTTON — chamfered techwear
+   ══════════════════════════════════════════ */
+.cta-cyber-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  background-color: transparent;
+  color: #FF0000;
+  font-family: var(--font-space-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid rgba(255, 0, 0, 0.6);
+  clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  overflow: hidden;
+}
+
+.cta-cyber-btn:hover {
+  background-color: #FF0000;
+  color: #000000;
+  border-color: #FF0000;
+}
+
+/* ══════════════════════════════════════════
+   SECTION DIVIDER — 1px gradient line
+   ══════════════════════════════════════════ */
+.section-divider {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right,
+      transparent 0%,
+      rgba(192, 192, 192, 0.12) 20%,
+      rgba(192, 192, 192, 0.2) 50%,
+      rgba(192, 192, 192, 0.12) 80%,
+      transparent 100%);
+  overflow: visible;
+}
+
+.section-divider::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #000000;
+  padding: 0 12px;
+  font-family: var(--font-space-mono);
+  font-size: 7px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(192, 192, 192, 0.3);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+body { cursor: auto !important; }
