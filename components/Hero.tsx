@@ -332,8 +332,6 @@ export default function Hero() {
 
           {/* Main Slogan — BELÉN // MEDELLÍN */}
           <div className="relative z-10 mt-4 mb-4">
-            {/* Red Diamond Indicator */}
-            <div className="absolute -top-4 -left-5 md:-left-7 w-3 h-3 bg-red-600 rotate-45 shadow-[0_0_12px_rgba(220,38,38,0.8)]"></div>
             <p className="text-2xl sm:text-3xl md:text-5xl font-bold font-display uppercase text-white tracking-[0.2em]">
               BELÉN // MEDELLÍN
             </p>
