@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useCallback, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
 /* ── ScrambleText ── */
 const GLYPHS = "!<>-_\\/[]{}—=+*^?#@$%&01";
@@ -59,21 +59,31 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
+  /* ── Scroll-Triggered HUD Logic ── */
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 150) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+      // Auto-close mobile menu when scrolling back to top
+      if (menuOpen) setMenuOpen(false);
+    }
+  });
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-black/90 backdrop-blur-md border-b border-silver/15"
-            : "bg-transparent border-b border-transparent"
+      <motion.header
+        initial={{ y: -100, opacity: 0 }}
+        animate={{
+          y: isScrolled ? 0 : -100,
+          opacity: isScrolled ? 1 : 0,
+        }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 w-full z-[150] bg-black/95 backdrop-blur-md border-b border-red-900/30 ${
+          isScrolled ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
@@ -107,17 +117,17 @@ export default function Navbar() {
             {menuOpen ? "[ X ]" : "[ MENU ]"}
           </button>
         </div>
-      </nav>
+      </motion.header>
 
       {/* Mobile overlay */}
       <AnimatePresence>
-        {menuOpen && (
+        {menuOpen && isScrolled && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-[57px] z-40 bg-black/95 backdrop-blur-md border-b border-silver/15 md:hidden"
+            className="fixed inset-x-0 top-[57px] z-[140] bg-black/95 backdrop-blur-md border-b border-silver/15 md:hidden"
           >
             <div className="flex flex-col py-2">
               {NAV_LINKS.map((link, i) => (
@@ -143,3 +153,4 @@ export default function Navbar() {
     </>
   );
 }
+

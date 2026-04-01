@@ -368,14 +368,14 @@ export default function Biografia() {
           >
             {/* Bio paragraphs */}
             <div className="space-y-5 border-l border-neutral-800/60 pl-5">
-              <p className="font-mono text-sm sm:text-base text-silver leading-[1.85] tracking-wide">
-                PaulGZ es un artista independiente de reggaetón y dancehall enfocado en llevar barras, energía y estilo a un nuevo nivel. Representando la nueva generación del movimiento urbano colombiano.
+              <p className="text-silver font-mono text-sm leading-relaxed">
+                Originario de Medellín pero forjado en la escena de Panamá, Paul GZ lleva 6 años afilando sus barras y estructuras como compositor y freestyler. Hace un año, dio el salto definitivo al front-line soltando su primer arsenal de sencillos: "Problemática", "Nena Gánster" y "Sata".
               </p>
-              <p className="font-mono text-sm sm:text-base text-silver/70 leading-[1.85] tracking-wide">
-                Con una estética que fusiona lo técnico con lo callejero, su propuesta sonora combina beats agresivos con líricas auténticas y una presencia escénica contundente.
+              <p className="text-silver font-mono text-sm leading-relaxed">
+                Con una estética que fusiona la ingeniería técnica con lo callejero, su propuesta sonora llamó la atención en el Eje Cafetero. Rompiendo los esquemas tradicionales, firmó una alianza estratégica con Rubio Studio —titanes de la producción visual— convirtiéndose en su primer artista urbano respaldado.
               </p>
-              <p className="font-mono text-sm sm:text-base text-silver/70 leading-[1.85] tracking-wide">
-                Desde Belén, Medellín para el mundo — cada track es una declaración de intenciones, cada performance una experiencia inmersiva diseñada para impactar.
+              <p className="text-silver font-mono text-sm leading-relaxed">
+                Este movimiento táctico detonó el lanzamiento de "Everest", un track respaldado por la icónica discoteca homónima. Desde la comuna para el mundo: cada track es una declaración de intenciones, cada performance una experiencia inmersiva diseñada para el impacto.
               </p>
             </div>
 
@@ -383,9 +383,9 @@ export default function Biografia() {
             <div className="mt-4 border border-neutral-800/60 p-4 space-y-2 bg-white/[0.01]">
               {[
                 ["GÉNERO", "REGGAETÓN / DANCEHALL"],
-                ["ORIGEN", "BELÉN, MEDELLÍN — COL"],
-                ["ESTADO", "ACTIVO // 2026"],
-                ["BOOKING", "DISPONIBLE"],
+                ["ORIGEN", "MEDELLÍN -> PANAMÁ"],
+                ["CREW / VISUALS", "RUBIO STUDIO"],
+                ["BOOKING", "DISPONIBLE // 2026"],
               ].map(([label, val]) => (
                 <div key={label} className="flex items-baseline justify-between gap-4">
                   <span className="font-mono text-[9px] tracking-[0.35em] text-neutral-600 uppercase shrink-0">
