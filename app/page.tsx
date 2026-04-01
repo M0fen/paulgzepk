@@ -15,37 +15,37 @@ export default function Home() {
         <Hero />
 
         <div
-          className="section-divider relative z-20"
+          className="section-divider relative"
           data-label="// BIOGRAFÍA //"
         />
         <Biografia />
 
         <div
-          className="section-divider relative z-20"
+          className="section-divider relative"
           data-label="// GALERÍA DE PRENSA //"
         />
         <GaleriaPrensa />
 
         <div
-          className="section-divider relative z-20"
+          className="section-divider relative"
           data-label="// LO MÁS RECIENTE //"
         />
         <LoMasReciente />
 
         <div
-          className="section-divider relative z-20"
+          className="section-divider relative"
           data-label="// SPOTIFY //"
         />
         <SpotifyEmbed />
 
         <div
-          className="section-divider relative z-20"
+          className="section-divider relative"
           data-label="// PRÓXIMOS LANZAMIENTOS //"
         />
         <ProximosLanzamientos />
 
         <div
-          className="section-divider relative z-20"
+          className="section-divider relative"
           data-label="// BOOKING //"
         />
         <BookingCTA />

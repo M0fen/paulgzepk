@@ -249,41 +249,80 @@ function TopographySVG() {
 
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
+
+  /* ── Ghost Fade: lightweight scroll-linked transforms ── */
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  // Parallax: moves down slower than foreground
-  const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-
-  // Sticky Z-Axis Drop transforms
-  const scaleDown = useTransform(scrollYProgress, [0, 0.6], [1, 0.88]);
-  const fadeOut   = useTransform(scrollYProgress, [0, 0.5], [1, 0.25]);
-  const yDrop     = useTransform(scrollYProgress, [0, 0.6], ["0%", "-6%"]);
+  const yParallax   = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const opacityFade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <div className="sticky top-0 h-screen w-full z-0 overflow-hidden">
-      <section
-        id="inicio"
-        ref={containerRef}
-        className="relative w-full flex items-center justify-center overflow-hidden bg-black"
-        style={{ height: "100svh", minHeight: "100dvh" }}
-      >
+    <section
+      id="inicio"
+      ref={containerRef}
+      className="relative w-full min-h-[100svh] flex flex-col justify-center overflow-hidden bg-black"
+    >
       {/* ── Dropdown Teaser (Top-Right) ── */}
       <TeaserDropdown />
 
-      {/* Background Kanji Overlay - Parallax & Pulse */}
+      {/* ═══ Ghost Fade wrapper — all visible content ═══ */}
       <motion.div
-        className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0"
-        style={{ y: yParallax }}
+        className="relative z-10 flex flex-col items-center justify-center w-full h-full transform-gpu will-change-transform"
+        style={{ y: yParallax, opacity: opacityFade }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/paul_bg_kanji.png"
-          alt="忠"
-          className="w-auto h-[120%] lg:h-[150%] max-w-none opacity-[0.18] mix-blend-screen animate-kanji-pulse"
-        />
+
+        {/* Background Kanji Overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/paul_bg_kanji.png"
+            alt="忠"
+            className="w-auto h-[120%] lg:h-[150%] max-w-none opacity-[0.18] mix-blend-screen animate-kanji-pulse"
+          />
+        </div>
+
+        {/* ═══ Content: Title / Subtitle / Teaser ═══ */}
+        <div
+          className="relative z-10 flex flex-col items-center justify-center px-5 md:px-6 text-center w-full py-24"
+        >
+
+          {/* Element 1: Artist Name — Monolithic Block */}
+          <h1 className="flex items-center justify-center gap-2 text-5xl sm:text-7xl lg:text-9xl font-black uppercase leading-none tracking-tight">
+            <span className="text-white">
+              <ScrambleReveal text="PAUL" />
+            </span>
+            <span className="text-[#FF0000] drop-shadow-[0_0_25px_rgba(255,0,0,0.9)] animate-[pulse_3s_ease-in-out_infinite]">
+              <ScrambleReveal text="GZ" />
+            </span>
+          </h1>
+
+          {/* ── Identity Block with Topography ── */}
+          <div className="w-full max-w-4xl flex flex-col items-center justify-center text-center relative mt-6">
+
+            {/* Topographic Valle de Aburrá Overlay */}
+            <TopographySVG />
+
+            {/* Main Slogan — BELÉN // MEDELLÍN */}
+            <div className="relative z-10 mt-4 mb-4">
+              <p className="text-2xl sm:text-3xl md:text-5xl font-bold font-display uppercase text-white tracking-[0.2em]">
+                BELÉN // MEDELLÍN
+              </p>
+            </div>
+
+            {/* Katakana Subtext */}
+            <p className="font-mono text-xs md:text-sm tracking-[0.3em] text-neutral-500 mt-2 mb-8">
+              [ ベレン - メデジン ]
+            </p>
+
+          </div>
+
+        </div>
+
       </motion.div>
 
       {/* Subtle noise texture */}
@@ -305,47 +344,6 @@ export default function Hero() {
         }}
       />
 
-      {/* ═══ Content: Reorganized Professional Hierarchy ═══ */}
-      <motion.div
-        className="relative z-10 flex flex-col items-center justify-center px-5 md:px-6 text-center h-full w-full"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-        style={{ scale: scaleDown, opacity: fadeOut, y: yDrop }}
-      >
-
-        {/* Element 1: Artist Name — Monolithic Block */}
-        <h1 className="flex items-center justify-center gap-2 text-5xl sm:text-7xl lg:text-9xl font-black uppercase leading-none tracking-tight">
-          <span className="text-white">
-            <ScrambleReveal text="PAUL" />
-          </span>
-          <span className="text-[#FF0000] drop-shadow-[0_0_25px_rgba(255,0,0,0.9)] animate-[pulse_3s_ease-in-out_infinite]">
-            <ScrambleReveal text="GZ" />
-          </span>
-        </h1>
-
-        {/* ── Identity Block with Topography ── */}
-        <div className="w-full max-w-4xl flex flex-col items-center justify-center text-center relative mt-6">
-
-          {/* Topographic Valle de Aburrá Overlay */}
-          <TopographySVG />
-
-          {/* Main Slogan — BELÉN // MEDELLÍN */}
-          <div className="relative z-10 mt-4 mb-4">
-            <p className="text-2xl sm:text-3xl md:text-5xl font-bold font-display uppercase text-white tracking-[0.2em]">
-              BELÉN // MEDELLÍN
-            </p>
-          </div>
-
-          {/* Katakana Subtext */}
-          <p className="font-mono text-xs md:text-sm tracking-[0.3em] text-neutral-500 mt-2 mb-8">
-            [ ベレン - メデジン ]
-          </p>
-
-        </div>
-
-      </motion.div>
-
       {/* Scanlines overlay */}
       <div
         className="pointer-events-none absolute inset-0 z-20 opacity-[0.06]"
@@ -365,7 +363,6 @@ export default function Hero() {
             "linear-gradient(to bottom, transparent, #000000)",
         }}
       />
-      </section>
-    </div>
+    </section>
   );
 }
