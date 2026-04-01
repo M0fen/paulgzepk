@@ -411,18 +411,31 @@ export default function Biografia() {
             </div>
           </motion.div>
 
-          {/* ── RIGHT: 3-Image Tech Frame Grid ── */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 lg:gap-4 w-full lg:w-auto lg:max-w-[520px]">
-            {["/gzpic1.png", "/gzpic2.png", "/gzpic3.png"].map((src, i) => (
-              <TechFrame
-                key={i}
-                src={src}
-                alt={`PaulGZ — Unit ${i + 1}`}
-                spec={FRAME_SPECS[i]}
-                index={i}
-                onClick={() => setSelectedImage(src)}
-              />
-            ))}
+          {/* ── RIGHT: 3-Image Tech Frame Carousel ── */}
+          <div className="w-full lg:w-auto lg:max-w-[520px]">
+            <div className="w-full flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-8 pb-8 pt-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              {["/gzpic1.png", "/gzpic2.png", "/gzpic3.png"].map((src, i) => (
+                <div key={i} className="flex-none w-[85vw] sm:w-[60vw] md:w-[400px] lg:w-[450px] snap-center">
+                  <TechFrame
+                    src={src}
+                    alt={`PaulGZ — Unit ${i + 1}`}
+                    spec={FRAME_SPECS[i]}
+                    index={i}
+                    onClick={() => setSelectedImage(src)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Tactical Navigation HUD */}
+            <div className="flex justify-between items-center w-full border-t border-neutral-800/50 pt-4 mt-2">
+              <span className="font-mono text-[10px] text-neutral-500 tracking-[0.2em]">// SWIPE_TO_NAVIGATE</span>
+              <div className="flex gap-2">
+                <div className="w-8 h-1 bg-red-600"></div>
+                <div className="w-2 h-1 bg-neutral-700"></div>
+                <div className="w-2 h-1 bg-neutral-700"></div>
+              </div>
+            </div>
           </div>
 
         </div>

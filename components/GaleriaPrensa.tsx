@@ -210,8 +210,8 @@ export default function GaleriaPrensa() {
         <span className="relative z-10 font-mono text-[10px] md:text-xs tracking-[0.3em] text-neutral-600 mt-2 md:mt-0 uppercase">ID: VISUAL_FEED</span>
       </div>
 
-      {/* Infrared Tactical Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-8">
+      {/* Infrared Tactical Carousel */}
+      <div className="w-full flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-8 pb-8 pt-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden mt-8">
         {PRESS_ASSETS.map((src, i) => (
           <motion.button
             key={i}
@@ -221,7 +221,7 @@ export default function GaleriaPrensa() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="group relative w-full aspect-[4/5] p-[2px] bg-neutral-900 border border-neutral-700/50 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-neutral-500 block text-left"
+            className="group relative flex-none w-[85vw] sm:w-[60vw] md:w-[400px] lg:w-[450px] snap-center aspect-[4/5] p-[2px] bg-neutral-900 border border-neutral-700/50 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-neutral-500 block text-left"
           >
             {/* Top-Left: Micro-LED */}
             <div className="absolute top-3 left-3 w-1.5 h-1.5 rounded-full bg-neutral-800 group-hover:bg-[#FF0000] group-hover:shadow-[0_0_8px_#FF0000] transition-all duration-300 z-20" />
@@ -234,6 +234,9 @@ export default function GaleriaPrensa() {
             {/* Tactical Red Overlay (Infrared lens effect) */}
             <div className="absolute inset-[2px] bg-red-900/40 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10 pointer-events-none" />
 
+            {/* Viewfinder Corners */}
+            <ViewfinderCorners />
+
             {/* Image */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -243,6 +246,17 @@ export default function GaleriaPrensa() {
             />
           </motion.button>
         ))}
+      </div>
+
+      {/* Tactical Navigation HUD */}
+      <div className="flex justify-between items-center w-full border-t border-neutral-800/50 pt-4 mt-2">
+        <span className="font-mono text-[10px] text-neutral-500 tracking-[0.2em]">// SWIPE_TO_NAVIGATE</span>
+        <div className="flex gap-2">
+          <div className="w-8 h-1 bg-red-600"></div>
+          <div className="w-2 h-1 bg-neutral-700"></div>
+          <div className="w-2 h-1 bg-neutral-700"></div>
+          <div className="w-2 h-1 bg-neutral-700"></div>
+        </div>
       </div>
 
       {/* Lightbox / Modal */}
