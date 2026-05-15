@@ -7,15 +7,22 @@ const YOUTUBE_IDS = ["B__qO1BXMDc", "0NwFCM7cPvY", "S4Xw6iLqKFg"];
 
 export default function LoMasReciente() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const goNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % YOUTUBE_IDS.length);
+    setIsPlaying(false);
   }, []);
 
   const goPrev = useCallback(() => {
     setActiveIndex(
       (prev) => (prev - 1 + YOUTUBE_IDS.length) % YOUTUBE_IDS.length
     );
+    setIsPlaying(false);
+  }, []);
+
+  const handlePlay = useCallback(() => {
+    setIsPlaying(true);
   }, []);
 
   return (
@@ -140,41 +147,85 @@ export default function LoMasReciente() {
           <span className="relative z-10 font-mono text-[10px] md:text-xs tracking-[0.3em] text-neutral-600 mt-2 md:mt-0 uppercase">ID: MEDIA_OUT</span>
         </div>
 
-        {/* Carousel viewport */}
+        {/* Carousel viewport — Custom Thumbnail Wrapper */}
         <div className="relative border border-neutral-800/60 bg-black overflow-hidden mt-8">
-          {/* Counter */}
+          {/* Counter — integrated in top bar */}
           <div className="absolute top-3 right-4 z-10 font-mono text-[10px] text-silver/40 tracking-[0.25em] uppercase">
             {String(activeIndex + 1).padStart(2, "0")} / {String(YOUTUBE_IDS.length).padStart(2, "0")}
           </div>
 
-          {/* Video container */}
+          {/* Video / Thumbnail container */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeIndex}
+              key={`${activeIndex}-${isPlaying}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="w-full aspect-video"
+              className="w-full aspect-video relative"
             >
-              <iframe
-                className="w-full h-full"
-                src={`https://www.youtube.com/embed/${YOUTUBE_IDS[activeIndex]}?rel=0&modestbranding=1`}
-                title={`Video ${activeIndex + 1}`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-              />
+              {isPlaying ? (
+                /* ── Actual YouTube iframe — loads only on click ── */
+                <iframe
+                  className="w-full h-full"
+                  src={`https://www.youtube.com/embed/${YOUTUBE_IDS[activeIndex]}?rel=0&modestbranding=1&autoplay=1`}
+                  title={`Video ${activeIndex + 1}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                /* ── Custom Thumbnail with Tactical Play Button ── */
+                <button
+                  type="button"
+                  onClick={handlePlay}
+                  className="w-full h-full relative group cursor-pointer"
+                  aria-label="Play video"
+                >
+                  {/* YouTube maxresdefault thumbnail */}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`https://img.youtube.com/vi/${YOUTUBE_IDS[activeIndex]}/maxresdefault.jpg`}
+                    alt={`Video thumbnail ${activeIndex + 1}`}
+                    className="w-full h-full object-cover grayscale-[60%] group-hover:grayscale-0 transition-all duration-500"
+                  />
+                  {/* Dark overlay */}
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
+
+                  {/* Tactical Play Button — chamfered style */}
+                  <div className="yt-play-btn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <polygon points="8,5 19,12 8,19" />
+                    </svg>
+                  </div>
+
+                  {/* Corner HUD elements */}
+                  <div className="absolute top-4 left-4 flex items-center gap-2 pointer-events-none">
+                    <span className="relative flex h-[5px] w-[5px]">
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 animate-ping opacity-60" />
+                      <span className="relative inline-flex h-[5px] w-[5px] rounded-full bg-red-600" />
+                    </span>
+                    <span className="font-mono text-[9px] text-white/60 tracking-[0.2em] uppercase">
+                      STREAM_READY
+                    </span>
+                  </div>
+
+                  <div className="absolute bottom-4 right-4 pointer-events-none">
+                    <span className="font-mono text-[9px] text-white/40 tracking-[0.2em] uppercase">
+                      {">"} CLICK_TO_PLAY
+                    </span>
+                  </div>
+                </button>
+              )}
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Navigation */}
+        {/* Navigation — Enlarged for mobile touch targets (44x44px minimum) */}
         <div className="flex items-center justify-between mt-4">
           <button
             onClick={goPrev}
-            className="font-mono text-[11px] font-bold tracking-[0.2em] text-silver/50 uppercase border border-silver/15 px-4 py-2 hover:text-brand-red hover:border-brand-red/40 transition-colors duration-200"
+            className="font-mono text-[11px] font-bold tracking-[0.2em] text-silver/50 uppercase border border-silver/15 px-5 py-3 min-h-[44px] min-w-[44px] hover:text-brand-red hover:border-brand-red/40 active:bg-brand-red/10 transition-colors duration-200"
           >
             {"◂ PREV"}
           </button>
@@ -184,7 +235,10 @@ export default function LoMasReciente() {
             {YOUTUBE_IDS.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setActiveIndex(i)}
+                onClick={() => {
+                  setActiveIndex(i);
+                  setIsPlaying(false);
+                }}
                 className={`w-2 h-2 transition-all duration-200 ${i === activeIndex
                     ? "bg-brand-red scale-125"
                     : "bg-silver/20 hover:bg-silver/40"
@@ -196,7 +250,7 @@ export default function LoMasReciente() {
 
           <button
             onClick={goNext}
-            className="font-mono text-[11px] font-bold tracking-[0.2em] text-silver/50 uppercase border border-silver/15 px-4 py-2 hover:text-brand-red hover:border-brand-red/40 transition-colors duration-200"
+            className="font-mono text-[11px] font-bold tracking-[0.2em] text-silver/50 uppercase border border-silver/15 px-5 py-3 min-h-[44px] min-w-[44px] hover:text-brand-red hover:border-brand-red/40 active:bg-brand-red/10 transition-colors duration-200"
           >
             {"NEXT ▸"}
           </button>

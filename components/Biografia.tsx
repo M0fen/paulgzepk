@@ -3,38 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-
-/* ── ScrambleText ── */
-const GLYPHS = "!<>-_\\/[]{}—=+*^?#@$%&01";
-
-function ScrambleText({ text }: { text: string }) {
-  const [display, setDisplay] = useState(text);
-  const ivRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const scramble = useCallback(() => {
-    let iteration = 0;
-    if (ivRef.current) clearInterval(ivRef.current);
-    ivRef.current = setInterval(() => {
-      setDisplay(
-        text
-          .split("")
-          .map((char, i) => {
-            if (char === " ") return " ";
-            if (i < iteration) return text[i];
-            return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-          })
-          .join("")
-      );
-      iteration += 1 / 2;
-      if (iteration >= text.length) {
-        if (ivRef.current) clearInterval(ivRef.current);
-        setDisplay(text);
-      }
-    }, 25);
-  }, [text]);
-
-  return <span onMouseEnter={scramble}>{display}</span>;
-}
+import ScrambleText from "@/components/ScrambleText";
 
 /* ── Tech Metallic Frame ── */
 const FRAME_SPECS = [
@@ -368,13 +337,13 @@ export default function Biografia() {
           >
             {/* Bio paragraphs */}
             <div className="space-y-5 border-l border-neutral-800/60 pl-5">
-              <p className="text-silver font-mono text-sm leading-relaxed">
+              <p className="text-neutral-200 font-mono text-sm leading-[1.7]">
                 Originario de Medellín pero forjado en la escena de Panamá, Paul GZ lleva 6 años afilando sus barras y estructuras como compositor y freestyler. Hace un año, dio el salto definitivo al front-line soltando su primer arsenal de sencillos: "Problemática", "Nena Gánster" y "Sata".
               </p>
-              <p className="text-silver font-mono text-sm leading-relaxed">
+              <p className="text-neutral-200 font-mono text-sm leading-[1.7]">
                 Con una estética que fusiona la ingeniería técnica con lo callejero, su propuesta sonora llamó la atención en el Eje Cafetero. Rompiendo los esquemas tradicionales, firmó una alianza estratégica con Rubio Studio —titanes de la producción visual— convirtiéndose en su primer artista urbano respaldado.
               </p>
-              <p className="text-silver font-mono text-sm leading-relaxed">
+              <p className="text-neutral-200 font-mono text-sm leading-[1.7]">
                 Este movimiento táctico detonó el lanzamiento de "Everest", un track respaldado por la icónica discoteca homónima. Desde la comuna para el mundo: cada track es una declaración de intenciones, cada performance una experiencia inmersiva diseñada para el impacto.
               </p>
             </div>
@@ -404,7 +373,7 @@ export default function Biografia() {
               <a
                 href="/presskit.zip"
                 download
-                className="cta-cyber-btn border-silver text-silver hover:bg-silver hover:text-black hover:border-silver inline-flex"
+                className="cta-glitch-btn inline-flex"
               >
                 <ScrambleText text="// DESCARGAR PRESS KIT (ZIP) //" />
               </a>

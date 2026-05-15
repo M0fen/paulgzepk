@@ -39,6 +39,24 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicGroup",
+  name: "PaulGZ",
+  alternateName: "Paul GZ",
+  genre: ["Reggaetón", "Dancehall"],
+  foundingLocation: {
+    "@type": "Place",
+    name: "Medellín, Colombia",
+  },
+  sameAs: [
+    "https://open.spotify.com/artist/62fm63OqMRWNUxHAbvjVtR",
+    "https://www.instagram.com/paulgzco/",
+  ],
+  description:
+    "Reggaetón & Dancehall artist from Medellín, Colombia. Compositor, freestyler y artista urbano.",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,8 +67,20 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceMono.variable} ${syncopate.variable} ${orientalDisplay.variable} antialiased cursor-default bg-black text-silver overflow-x-hidden`}
       >
-        {children}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        {/* Tactical max-width container — 1200px elegance */}
+        <div className="max-w-[1200px] mx-auto relative">
+          {children}
+        </div>
         <TickerTape />
+
+        {/* ── Global CRT Scanlines Overlay ── */}
+        <div className="crt-scanlines" aria-hidden="true" />
+        {/* ── Global Noise Grain Overlay ── */}
+        <div className="noise-grain" aria-hidden="true" />
       </body>
     </html>
   );

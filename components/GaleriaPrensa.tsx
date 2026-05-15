@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ── Static feed metadata per image ── */
@@ -9,7 +9,7 @@ const FEED_DATA = [
   { id: "DATA_FRM_417", cam: "CAM_04", timestamp: "03:47:19", sector: "URB-NTE" },
   { id: "DATA_FRM_031", cam: "CAM_02", timestamp: "03:47:23", sector: "MED-BLN" },
   { id: "DATA_FRM_768", cam: "CAM_07", timestamp: "03:47:31", sector: "STG-INT" },
-];
+] as const;
 
 const PRESS_ASSETS = [
   "/gzgaleria1.png",
@@ -46,6 +46,32 @@ function ViewfinderCorners() {
 
 export default function GaleriaPrensa() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Track which card is centered via IntersectionObserver
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const cards = container.querySelectorAll<HTMLElement>("[data-gallery-card]");
+    if (cards.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number((entry.target as HTMLElement).dataset.galleryCard);
+            if (!isNaN(idx)) setActiveIndex(idx);
+          }
+        });
+      },
+      { root: container, threshold: 0.6 }
+    );
+
+    cards.forEach((card) => observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <motion.section
@@ -211,7 +237,10 @@ export default function GaleriaPrensa() {
       </div>
 
       {/* Infrared Tactical Carousel */}
-      <div className="w-full flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-8 pb-8 pt-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden mt-8">
+      <div
+        ref={scrollRef}
+        className="w-full flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-8 pb-8 pt-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden mt-8"
+      >
         {PRESS_ASSETS.map((src, i) => (
           <motion.button
             key={i}
@@ -221,7 +250,8 @@ export default function GaleriaPrensa() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="group relative flex-none w-[85vw] sm:w-[60vw] md:w-[400px] lg:w-[450px] snap-center aspect-[4/5] p-[2px] bg-neutral-900 border border-neutral-700/50 shadow-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:border-neutral-500 block text-left"
+            className="group relative flex-none w-[85vw] sm:w-[60vw] md:w-[400px] lg:w-[450px] snap-center aspect-[4/5] p-[2px] bg-neutral-900 border border-neutral-700/50 shadow-2xl overflow-hidden cursor-crosshair transition-all duration-300 hover:border-neutral-500 block text-left"
+            data-gallery-card={i}
           >
             {/* Top-Left: Micro-LED */}
             <div className="absolute top-3 left-3 w-1.5 h-1.5 rounded-full bg-neutral-800 group-hover:bg-[#FF0000] group-hover:shadow-[0_0_8px_#FF0000] transition-all duration-300 z-20" />
@@ -230,6 +260,34 @@ export default function GaleriaPrensa() {
             <span className="absolute bottom-2 right-2 font-mono text-[9px] text-neutral-600 tracking-widest z-20">
               SYS.CAM_0{i + 1}
             </span>
+
+            {/* ── Tactical VIEW_FILE Overlay ── */}
+            <div className="absolute inset-[2px] z-30 flex flex-col items-center justify-center gap-3 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+              {/* Crosshair visor icon */}
+              <svg
+                className="w-12 h-12 text-white/70"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1}
+              >
+                <circle cx="12" cy="12" r="6" />
+                <line x1="12" y1="2" x2="12" y2="6" />
+                <line x1="12" y1="18" x2="12" y2="22" />
+                <line x1="2" y1="12" x2="6" y2="12" />
+                <line x1="18" y1="12" x2="22" y2="12" />
+                {/* Center plus */}
+                <line x1="11" y1="12" x2="13" y2="12" strokeWidth={2} />
+                <line x1="12" y1="11" x2="12" y2="13" strokeWidth={2} />
+              </svg>
+              <span className="font-mono text-[10px] tracking-[0.4em] text-white/80 uppercase">
+                [ VIEW_FILE ]
+              </span>
+              {/* Bottom metadata */}
+              <span className="absolute bottom-4 left-4 font-mono text-[8px] tracking-[0.3em] text-neutral-500 uppercase">
+                {FEED_DATA[i]?.cam ?? `CAM_0${i+1}`} // {FEED_DATA[i]?.sector ?? "UNKNOWN"}
+              </span>
+            </div>
 
             {/* Tactical Red Overlay (Infrared lens effect) */}
             <div className="absolute inset-[2px] bg-red-900/40 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10 pointer-events-none" />
@@ -252,10 +310,23 @@ export default function GaleriaPrensa() {
       <div className="flex justify-between items-center w-full border-t border-neutral-800/50 pt-4 mt-2">
         <span className="font-mono text-[10px] text-neutral-500 tracking-[0.2em]">// SWIPE_TO_NAVIGATE</span>
         <div className="flex gap-2">
-          <div className="w-8 h-1 bg-red-600"></div>
-          <div className="w-2 h-1 bg-neutral-700"></div>
-          <div className="w-2 h-1 bg-neutral-700"></div>
-          <div className="w-2 h-1 bg-neutral-700"></div>
+          {PRESS_ASSETS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                const container = scrollRef.current;
+                if (!container) return;
+                const cards = container.querySelectorAll<HTMLElement>("[data-gallery-card]");
+                cards[i]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+              }}
+              className={`h-1 transition-all duration-300 ${
+                i === activeIndex
+                  ? "w-8 bg-red-600"
+                  : "w-2 bg-neutral-700 hover:bg-neutral-500"
+              }`}
+              aria-label={`Go to image ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
 

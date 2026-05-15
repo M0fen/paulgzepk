@@ -2,42 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-
-/* ── ScrambleText (same logic as Navbar) ── */
-const GLYPHS = "!<>-_\\/[]{}—=+*^?#@$%&01";
-
-function ScrambleReveal({ text }: { text: string }) {
-  const [display, setDisplay] = useState(text);
-
-  const scramble = useCallback(() => {
-    let iteration = 0;
-    const iv = setInterval(() => {
-      setDisplay(
-        text
-          .split("")
-          .map((char, i) => {
-            if (char === " ") return " ";
-            if (i < iteration) return text[i];
-            return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-          })
-          .join("")
-      );
-      iteration += 1 / 3;
-      if (iteration >= text.length) {
-        clearInterval(iv);
-        setDisplay(text);
-      }
-    }, 30);
-    return iv;
-  }, [text]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => { scramble(); }, 300);
-    return () => clearTimeout(timeout);
-  }, [scramble]);
-
-  return <span>{display}</span>;
-}
+import ScrambleText from "@/components/ScrambleText";
 
 /* ── Dropdown Teaser Component ── */
 function TeaserDropdown() {
@@ -68,7 +33,7 @@ function TeaserDropdown() {
           <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/30 animate-pulse"></span>
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
         </span>
-        <span className="font-mono text-[10px] sm:text-xs font-semibold tracking-[0.15em] text-neutral-200 uppercase">
+        <span className="font-mono text-xs sm:text-sm font-semibold tracking-[0.15em] text-neutral-200 uppercase">
           LO QUE SE VIENE, NO SE ME DESCONECTE
         </span>
         {/* Chevron */}
@@ -294,22 +259,22 @@ export default function Hero() {
           {/* Element 1: Artist Name — Monolithic Block */}
           <h1 className="flex items-center justify-center gap-2 text-5xl sm:text-7xl lg:text-9xl font-black uppercase leading-none tracking-tight">
             <span className="text-white">
-              <ScrambleReveal text="PAUL" />
+              <ScrambleText text="PAUL" autoPlay />
             </span>
             <span className="text-[#FF0000] drop-shadow-[0_0_25px_rgba(255,0,0,0.9)] animate-[pulse_3s_ease-in-out_infinite]">
-              <ScrambleReveal text="GZ" />
+              <ScrambleText text="GZ" autoPlay />
             </span>
           </h1>
 
           {/* ── Identity Block with Topography ── */}
-          <div className="w-full max-w-4xl flex flex-col items-center justify-center text-center relative mt-6">
+          <div className="w-full max-w-4xl flex flex-col items-center justify-center text-center relative mt-10">
 
             {/* Topographic Valle de Aburrá Overlay */}
             <TopographySVG />
 
             {/* Main Slogan — BELÉN // MEDELLÍN */}
-            <div className="relative z-10 mt-4 mb-4">
-              <p className="text-2xl sm:text-3xl md:text-5xl font-bold font-display uppercase text-white tracking-[0.2em]">
+            <div className="relative z-10 mt-6 mb-4">
+              <p className="text-2xl sm:text-3xl md:text-5xl font-bold font-display uppercase text-white tracking-[0.35em]">
                 BELÉN // MEDELLÍN
               </p>
             </div>
@@ -325,15 +290,7 @@ export default function Hero() {
 
       </motion.div>
 
-      {/* Subtle noise texture */}
-      <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage:
-            "url('data:image/svg+xml,%3Csvg viewBox=\"0 0 200 200\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"n\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.85\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23n)\"/%3E%3C/svg%3E')",
-          backgroundSize: "250px 250px",
-        }}
-      />
+      {/* Noise texture — now handled by global .noise-grain overlay */}
 
       {/* Radial glow */}
       <div

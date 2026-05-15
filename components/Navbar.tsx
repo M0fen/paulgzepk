@@ -1,51 +1,8 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
-
-/* ── ScrambleText ── */
-const GLYPHS = "!<>-_\\/[]{}—=+*^?#@$%&01";
-
-function ScrambleText({ text, autoPlay = false }: { text: string; autoPlay?: boolean }) {
-  const [display, setDisplay] = useState(text);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const scramble = useCallback(() => {
-    let iteration = 0;
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setDisplay(
-        text
-          .split("")
-          .map((char, i) => {
-            if (char === " ") return " ";
-            if (i < iteration) return text[i];
-            return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-          })
-          .join("")
-      );
-      iteration += 1 / 2;
-      if (iteration >= text.length) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        setDisplay(text);
-      }
-    }, 30);
-  }, [text]);
-
-  useEffect(() => {
-    if (autoPlay) scramble();
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [autoPlay, scramble]);
-
-  return (
-    <span
-      className="inline-block"
-      onMouseEnter={scramble}
-    >
-      {display}
-    </span>
-  );
-}
+import ScrambleText from "@/components/ScrambleText";
 
 /* ── Nav Links ── */
 const NAV_LINKS = [

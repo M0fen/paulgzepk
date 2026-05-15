@@ -1,43 +1,7 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
-
-/* ── ScrambleText for CTA buttons ── */
-const GLYPHS = "!<>-_\\/[]{}—=+*^?#@$%&01";
-
-function ScrambleText({ text }: { text: string }) {
-  const [display, setDisplay] = useState(text);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const scramble = useCallback(() => {
-    let iteration = 0;
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    intervalRef.current = setInterval(() => {
-      setDisplay(
-        text
-          .split("")
-          .map((char, i) => {
-            if (char === " ") return " ";
-            if (i < iteration) return text[i];
-            return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-          })
-          .join("")
-      );
-      iteration += 1 / 2;
-      if (iteration >= text.length) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        setDisplay(text);
-      }
-    }, 30);
-  }, [text]);
-
-  return (
-    <span className="inline-block" onMouseEnter={scramble}>
-      {display}
-    </span>
-  );
-}
+import ScrambleText from "@/components/ScrambleText";
 
 export default function BookingCTA() {
   return (
@@ -198,35 +162,42 @@ export default function BookingCTA() {
           className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 relative z-10 w-full"
         >
 
-          {/* ── COMMS MODULE 1: WhatsApp ── */}
+          {/* ── COMMS MODULE 1: WhatsApp — PRIMARY CTA (More Prominent) ── */}
           <a
             href="https://wa.me/573234470562"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative min-h-24 p-5 border border-neutral-800 bg-neutral-950/80 hover:bg-neutral-900 transition-all duration-300 hover:border-red-600/50 flex flex-col gap-4 overflow-hidden"
+            className="group relative min-h-28 p-6 border-2 border-emerald-900/50 bg-emerald-950/10 hover:bg-emerald-950/20 transition-all duration-300 hover:border-emerald-500/50 flex flex-col gap-4 overflow-hidden hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]"
           >
             {/* Corner accent */}
-            <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-neutral-700 group-hover:border-red-600/40 transition-colors duration-300" />
-            <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-neutral-700 group-hover:border-red-600/40 transition-colors duration-300" />
+            <div className="absolute top-0 right-0 w-6 h-6 border-t border-r border-emerald-800/40 group-hover:border-emerald-500/40 transition-colors duration-300" />
+            <div className="absolute bottom-0 left-0 w-6 h-6 border-b border-l border-emerald-800/40 group-hover:border-emerald-500/40 transition-colors duration-300" />
 
-            {/* Top row */}
+            {/* Top row — Label + ONLINE status */}
             <div className="flex items-center justify-between">
-              <span className="text-silver font-mono text-sm md:text-base tracking-widest uppercase">
-                WHATSAPP
-              </span>
-              {/* Online status dot */}
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]" />
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="text-silver font-mono text-base md:text-lg tracking-widest uppercase font-bold">
+                  WHATSAPP
+                </span>
+                {/* ONLINE badge */}
+                <span className="flex items-center gap-1.5 px-2 py-0.5 border border-emerald-700/50 rounded-sm bg-emerald-950/30">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]" />
+                  </span>
+                  <span className="font-mono text-[9px] tracking-[0.2em] text-emerald-400 uppercase font-bold animate-pulse">
+                    ONLINE
+                  </span>
+                </span>
+              </div>
             </div>
 
             {/* Bottom row */}
             <div className="flex items-center justify-between">
               <span className="text-neutral-500 font-mono text-[10px] tracking-widest uppercase">
-                // ENCRYPTED_CHANNEL
+                // ENCRYPTED_CHANNEL — PRIORITY
               </span>
-              <span className="text-neutral-400 group-hover:text-red-500 font-mono text-[10px] tracking-widest transition-colors duration-200">
+              <span className="text-emerald-600 group-hover:text-emerald-400 font-mono text-[10px] tracking-widest transition-colors duration-200 font-bold">
                 {">"} INIT_CONNECTION
               </span>
             </div>
@@ -266,30 +237,36 @@ export default function BookingCTA() {
             </div>
           </a>
 
-          {/* ── FULL-WIDTH MODULE: Tech Rider Download ── */}
+          {/* ── FULL-WIDTH MODULE: Tech Rider Download — HIGH PRIORITY ── */}
           <a
             href="/tech_rider.pdf"
             download
-            className="group col-span-1 md:col-span-2 mt-2 w-full p-5 border border-red-900/50 bg-red-950/10 hover:bg-red-950/20 transition-all duration-300 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden"
+            className="group col-span-1 md:col-span-2 mt-2 w-full p-6 border-2 border-red-800/60 bg-red-950/15 hover:bg-red-950/25 transition-all duration-300 hover:border-red-500/70 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden hover:shadow-[0_0_25px_rgba(255,0,0,0.08)]"
           >
             {/* Subtle scan line on hover */}
             <div className="absolute inset-0 bg-gradient-to-r from-red-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
             {/* Left: Labels */}
-            <div className="flex flex-col gap-1.5">
-              <span className="text-red-500 font-mono text-sm tracking-widest font-bold uppercase">
-                DOWNLOAD TECH RIDER (PDF)
-              </span>
-              <span className="text-neutral-600 font-mono text-[10px] tracking-widest uppercase">
-                FILE_SIZE: 4.2MB // FORMAT: PDF // SECURE_TRANSFER
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="text-red-500 font-mono text-base tracking-widest font-bold uppercase">
+                  <ScrambleText text="DOWNLOAD TECH RIDER (PDF)" />
+                </span>
+                {/* Priority badge */}
+                <span className="px-2 py-0.5 border border-red-700/60 bg-red-950/40 font-mono text-[8px] tracking-[0.3em] text-red-400 uppercase font-bold animate-pulse">
+                  PRIORITY: HIGH
+                </span>
+              </div>
+              <span className="text-neutral-500 font-mono text-[10px] tracking-widest uppercase">
+                FILE_SIZE: 4.2MB // FORMAT: PDF // SECURE_TRANSFER // FOR_SOUND_ENGINEERS
               </span>
             </div>
 
             {/* Right: CTA */}
             <div className="flex items-center gap-3 shrink-0">
-              {/* Download arrow SVG */}
+              {/* Download arrow SVG — Larger */}
               <svg
-                className="w-4 h-4 text-red-700 group-hover:text-red-400 transition-colors duration-200"
+                className="w-6 h-6 text-red-600 group-hover:text-red-400 transition-colors duration-200"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -297,7 +274,7 @@ export default function BookingCTA() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              <span className="font-mono text-[11px] tracking-widest text-neutral-400 group-hover:text-red-400 transition-colors duration-200 uppercase">
+              <span className="font-mono text-[11px] tracking-widest text-neutral-400 group-hover:text-red-400 transition-colors duration-200 uppercase font-bold">
                 [ INITIATE_TRANSFER ]
               </span>
             </div>
@@ -305,18 +282,10 @@ export default function BookingCTA() {
 
         </motion.div>
 
-        {/* ── System Status Bar ── */}
-        <div className="mt-8 w-full border-t border-neutral-800/60 pt-4 flex items-center justify-between">
-          <span className="font-mono text-[9px] text-neutral-700 tracking-[0.3em] uppercase">
-            NODE: PAULGZ_EPK // v2026.1
-          </span>
-          <span className="font-mono text-[9px] text-neutral-600 tracking-[0.35em] uppercase">
-            SYS_STATUS: ONLINE // AWAITING_INPUT
-          </span>
-          <span className="font-mono text-[9px] text-neutral-700 tracking-[0.3em] uppercase">
-            LAT: 06.23°N LON: -75.62°W
-          </span>
-        </div>
+        {/* System label */}
+        <p className="mt-6 font-mono text-[9px] text-silver/25 tracking-[0.35em] uppercase text-right">
+          {"// SECURE_COMMS — ALL_CHANNELS_OPEN"}
+        </p>
 
       </div>
     </motion.section>
