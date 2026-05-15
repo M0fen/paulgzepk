@@ -13,32 +13,7 @@ export default function SpotifyEmbed() {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* Topographic SVG convergence overlay */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.08] transition-opacity duration-500 group-hover/section:opacity-[0.12]"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        <defs>
-          <radialGradient id="spot-topo-fade" cx="45%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="white" stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="spot-topo-mask">
-            <rect width="100%" height="100%" fill="url(#spot-topo-fade)" />
-          </mask>
-        </defs>
-        <g mask="url(#spot-topo-mask)" stroke="white" strokeWidth="0.5">
-          {[35, 75, 120, 165, 215, 270, 340, 420].map((r, i) => (
-            <ellipse key={i} cx="45%" cy="50%" rx={r} ry={r * 0.55} />
-          ))}
-          <line x1="0" y1="45%" x2="100%" y2="45%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="0" y1="65%" x2="100%" y2="65%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="45%" y1="0" x2="45%" y2="100%" strokeWidth="0.3" strokeDasharray="3 14" />
-        </g>
-      </svg>
+      <TopoOverlay variant="spotify" />
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent pointer-events-none z-[5]" />
@@ -70,6 +45,7 @@ export default function SpotifyEmbed() {
         >
           <iframe
             src="https://open.spotify.com/embed/artist/62fm63OqMRWNUxHAbvjVtR?utm_source=generator&theme=0"
+            title="PaulGZ en Spotify — perfil del artista y top tracks"
             width="100%"
             height="352"
             frameBorder="0"

@@ -12,6 +12,11 @@ interface ScrambleTextProps {
   className?: string;
 }
 
+function prefersReducedMotion() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export default function ScrambleText({
   text,
   autoPlay = false,
@@ -21,6 +26,10 @@ export default function ScrambleText({
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const scramble = useCallback(() => {
+    if (prefersReducedMotion()) {
+      setDisplay(text);
+      return;
+    }
     let iteration = 0;
     if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -43,7 +52,7 @@ export default function ScrambleText({
   }, [text]);
 
   useEffect(() => {
-    if (autoPlay) {
+    if (autoPlay && !prefersReducedMotion()) {
       const timeout = setTimeout(() => scramble(), 300);
       return () => clearTimeout(timeout);
     }

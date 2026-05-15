@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import TopoOverlay from "@/components/TopoOverlay";
 
 const RELEASES = [
   {
@@ -9,6 +11,7 @@ const RELEASES = [
     album: "PEREIRA X MEDALLO",
     date: "YA DISPONIBLE",
     status: "confirmed" as const,
+    youtubeId: "VqIUee3oAX8",
   },
   {
     track: "MARBELLA",
@@ -16,6 +19,7 @@ const RELEASES = [
     album: "SENCILLO",
     date: "YA DISPONIBLE",
     status: "confirmed" as const,
+    youtubeId: "tOjheAAzuXY",
   },
   {
     track: "SUELTATE",
@@ -23,6 +27,7 @@ const RELEASES = [
     album: "PEREIRA X MEDALLO",
     date: "YA DISPONIBLE",
     status: "confirmed" as const,
+    youtubeId: "faRJ1ddGJvE",
   },
   {
     track: "ROMANTIKEO",
@@ -30,6 +35,7 @@ const RELEASES = [
     album: "PEREIRA X MEDALLO",
     date: "YA DISPONIBLE",
     status: "confirmed" as const,
+    youtubeId: "hXvbQ4AHt9g",
   },
   {
     track: "MANIATIKOS",
@@ -37,6 +43,7 @@ const RELEASES = [
     album: "PEREIRA X MEDALLO",
     date: "YA DISPONIBLE",
     status: "confirmed" as const,
+    youtubeId: "bpwmRTf_tXI",
   },
   {
     track: "2KCLASSIC",
@@ -44,6 +51,7 @@ const RELEASES = [
     album: "PEREIRA X MEDALLO",
     date: "YA DISPONIBLE",
     status: "confirmed" as const,
+    youtubeId: "Q_zp8aR6STs",
   },
   {
     track: "CLACK CLACK CLACK",
@@ -51,6 +59,7 @@ const RELEASES = [
     album: "PEREIRA X MEDALLO",
     date: "YA DISPONIBLE",
     status: "confirmed" as const,
+    youtubeId: "530MV4yHVfg",
   },
   {
     track: "[ ENCRIPTADO ]",
@@ -58,10 +67,17 @@ const RELEASES = [
     album: null,
     date: "TBA",
     status: "encrypted" as const,
+    youtubeId: null,
   },
 ];
 
+const VISIBLE_COUNT = 3;
+
 export default function ProximosLanzamientos() {
+  const [expanded, setExpanded] = useState(false);
+  const visibleReleases = expanded ? RELEASES : RELEASES.slice(0, VISIBLE_COUNT);
+  const hiddenCount = RELEASES.length - VISIBLE_COUNT;
+
   return (
     <motion.section
       id="lanzamientos"
@@ -71,32 +87,7 @@ export default function ProximosLanzamientos() {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* Topographic SVG convergence overlay */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.08] transition-opacity duration-500 group-hover/section:opacity-[0.12]"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        <defs>
-          <radialGradient id="rel-topo-fade" cx="50%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="white" stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="rel-topo-mask">
-            <rect width="100%" height="100%" fill="url(#rel-topo-fade)" />
-          </mask>
-        </defs>
-        <g mask="url(#rel-topo-mask)" stroke="white" strokeWidth="0.5">
-          {[35, 70, 110, 160, 220, 290, 370].map((r, i) => (
-            <ellipse key={i} cx="50%" cy="50%" rx={r} ry={r * 0.5} />
-          ))}
-          <line x1="0" y1="42%" x2="100%" y2="42%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="0" y1="58%" x2="100%" y2="58%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="50%" y1="0" x2="50%" y2="100%" strokeWidth="0.3" strokeDasharray="3 14" />
-        </g>
-      </svg>
+      <TopoOverlay variant="discografia" />
 
       {/* Radar sweep background */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] overflow-hidden flex items-center justify-center">
@@ -162,6 +153,9 @@ export default function ProximosLanzamientos() {
         {/* Column Labels (desktop only) */}
         <div className="hidden sm:flex justify-between px-4 pb-3 border-b border-neutral-700">
           <div className="flex gap-4 sm:gap-8 w-full max-w-[75%]">
+            <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase w-12 shrink-0">
+              PLAY
+            </span>
             <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase w-44 shrink-0">
               TRACK
             </span>
@@ -178,7 +172,7 @@ export default function ProximosLanzamientos() {
         </div>
 
         {/* Data Rows */}
-        <motion.ul 
+        <motion.ul
           className="divide-y divide-neutral-800/60"
           initial="hidden"
           whileInView="visible"
@@ -188,67 +182,124 @@ export default function ProximosLanzamientos() {
             hidden: {},
           }}
         >
-          {RELEASES.map((release, i) => (
-            <motion.li
-              key={i}
-              variants={{
-                hidden: { opacity: 0, x: -15, filter: "blur(4px)" },
-                visible: { opacity: 1, x: 0, filter: "blur(0px)" },
-              }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-4 hover:bg-neutral-900/50 hover:scale-[1.01] transition-all duration-300 group"
-            >
-              {/* Left block */}
-              <div className="flex flex-col sm:flex-row sm:gap-4 sm:gap-8 w-full sm:max-w-[75%]">
-                {/* Track name */}
-                <div className="flex items-center gap-2 sm:w-44 shrink-0">
-                  {/* Status indicator */}
-                  <span
-                    className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                      release.status === "confirmed"
-                        ? "bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]"
-                        : "bg-neutral-700"
-                    }`}
-                  />
-                  <span
-                    className={`font-mono text-sm tracking-wide ${
-                      release.status === "encrypted"
-                        ? "text-neutral-600 blur-[0.5px] select-none"
-                        : "text-white"
-                    }`}
-                  >
-                    {release.track}
+          <AnimatePresence initial={false}>
+            {visibleReleases.map((release, i) => (
+              <motion.li
+                key={release.track}
+                layout
+                variants={{
+                  hidden: { opacity: 0, x: -15, filter: "blur(4px)" },
+                  visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+                }}
+                initial={i >= VISIBLE_COUNT ? { opacity: 0, x: -15, filter: "blur(4px)" } : undefined}
+                animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                exit={{ opacity: 0, x: -15, filter: "blur(4px)" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-4 hover:bg-neutral-900/50 transition-all duration-300 group"
+              >
+                {/* Left block */}
+                <div className="flex flex-col sm:flex-row sm:gap-4 sm:gap-8 w-full sm:max-w-[75%]">
+                  {/* Play button */}
+                  <div className="sm:w-12 shrink-0 flex items-center">
+                    {release.youtubeId ? (
+                      <a
+                        href={`https://www.youtube.com/watch?v=${release.youtubeId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Reproducir ${release.track} en YouTube`}
+                        className="group/play inline-flex items-center justify-center w-8 h-8 border border-red-700/40 bg-red-950/20 hover:bg-red-600 hover:border-red-500 transition-all duration-200"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="w-3 h-3 fill-red-500 group-hover/play:fill-white transition-colors duration-200"
+                        >
+                          <polygon points="8,5 19,12 8,19" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <span className="inline-flex items-center justify-center w-8 h-8 border border-neutral-800 bg-neutral-950/40 text-neutral-700 font-mono text-[10px]">
+                        ?
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Track name */}
+                  <div className="flex items-center gap-2 sm:w-44 shrink-0 mt-2 sm:mt-0">
+                    {/* Status indicator */}
+                    <span
+                      className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                        release.status === "confirmed"
+                          ? "bg-green-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]"
+                          : "bg-neutral-700"
+                      }`}
+                    />
+                    <span
+                      className={`font-mono text-sm tracking-wide ${
+                        release.status === "encrypted"
+                          ? "text-neutral-600 blur-[0.5px] select-none"
+                          : "text-white"
+                      }`}
+                    >
+                      {release.track}
+                    </span>
+                  </div>
+
+                  {/* Feat */}
+                  <span className="font-mono text-xs text-neutral-400 tracking-wide mt-1 sm:mt-0 pl-4 sm:pl-0 sm:w-32 shrink-0">
+                    {release.feat
+                      ? `ft. ${release.feat}`
+                      : release.status === "encrypted"
+                        ? "—"
+                        : "—"}
+                  </span>
+
+                  {/* Album */}
+                  <span className="font-mono text-xs text-brand-red/80 tracking-wide mt-1 sm:mt-0 pl-4 sm:pl-0 truncate">
+                    {release.album ? `[${release.album}]` : "—"}
                   </span>
                 </div>
 
-                {/* Feat */}
-                <span className="font-mono text-xs text-neutral-400 tracking-wide mt-1 sm:mt-0 pl-4 sm:pl-0 sm:w-32 shrink-0">
-                  {release.feat
-                    ? `ft. ${release.feat}`
-                    : release.status === "encrypted"
-                      ? "—"
-                      : "—"}
+                {/* Right block: Date */}
+                <span
+                  className={`font-mono text-xs tracking-[0.2em] uppercase mt-2 sm:mt-0 pl-4 sm:pl-0 sm:text-right ${
+                    release.status === "encrypted"
+                      ? "text-neutral-600 blur-[1px] select-none"
+                      : "text-white"
+                  }`}
+                >
+                  {release.date}
                 </span>
-
-                {/* Album */}
-                <span className="font-mono text-xs text-brand-red/80 tracking-wide mt-1 sm:mt-0 pl-4 sm:pl-0 truncate">
-                  {release.album ? `[${release.album}]` : "—"}
-                </span>
-              </div>
-
-              {/* Right block: Date */}
-              <span
-                className={`font-mono text-xs tracking-[0.2em] uppercase mt-2 sm:mt-0 pl-4 sm:pl-0 sm:text-right ${
-                  release.status === "encrypted"
-                    ? "text-neutral-600 blur-[1px] select-none"
-                    : "text-white"
-                }`}
-              >
-                {release.date}
-              </span>
-            </motion.li>
-          ))}
+              </motion.li>
+            ))}
+          </AnimatePresence>
         </motion.ul>
+
+        {/* Ver más / Ver menos toggle */}
+        {RELEASES.length > VISIBLE_COUNT && (
+          <div className="mt-6 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setExpanded((v) => !v)}
+              aria-expanded={expanded}
+              className="group inline-flex items-center gap-3 px-6 py-3 border border-red-700/40 bg-red-950/10 hover:bg-red-950/30 hover:border-red-500/70 transition-all duration-300"
+            >
+              <span className="font-mono text-[11px] tracking-[0.3em] text-red-400 group-hover:text-red-300 uppercase font-bold transition-colors">
+                {expanded
+                  ? "// VER MENOS"
+                  : `// VER MÁS (${hiddenCount})`}
+              </span>
+              <svg
+                className={`w-3 h-3 text-red-500 transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+        )}
 
         {/* Footer line */}
         <div className="mt-8 flex items-center gap-3">

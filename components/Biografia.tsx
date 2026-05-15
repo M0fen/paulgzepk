@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import ScrambleText from "@/components/ScrambleText";
@@ -116,11 +116,12 @@ function TechFrame({
 
         {/* ── Image Viewport ── */}
         <div className="relative overflow-hidden bg-black" style={{ aspectRatio: "3/4" }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={src}
             alt={alt}
-            className="w-full h-full object-cover object-top grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 ease-out group-hover:scale-105"
+            fill
+            sizes="(max-width: 768px) 85vw, (max-width: 1024px) 60vw, 450px"
+            className="object-cover object-top grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 ease-out group-hover:scale-105"
           />
           {/* Vignette */}
           <div
@@ -177,6 +178,21 @@ function TechFrame({
 /* ── Main Biografia Export ── */
 export default function Biografia() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  // ESC to close + scroll-lock while modal is open
+  useEffect(() => {
+    if (!selectedImage) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedImage(null);
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [selectedImage]);
 
   return (
     <motion.section
@@ -317,6 +333,9 @@ export default function Biografia() {
               <p className="text-neutral-200 font-mono text-sm leading-[1.7]">
                 Este movimiento táctico detonó el lanzamiento de "Everest", un track respaldado por la icónica discoteca homónima. Desde la comuna para el mundo: cada track es una declaración de intenciones, cada performance una experiencia inmersiva diseñada para el impacto.
               </p>
+              <p className="text-neutral-200 font-mono text-sm leading-[1.7]">
+                Hoy el catálogo se consolida con el EP <span className="text-white font-bold">PEREIRA X MEDALLO</span> junto a <span className="text-white font-bold">Santos OG</span> — la nueva ofensiva: seis cortes, una alianza entre territorios y la próxima fase ya cifrada en código.
+              </p>
             </div>
 
             {/* Spec table */}
@@ -390,6 +409,9 @@ export default function Biografia() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Vista ampliada de imagen"
             className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-8 md:p-16"
             onClick={() => setSelectedImage(null)}
           >
@@ -423,10 +445,11 @@ export default function Biografia() {
                 </span>
               </div>
 
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={selectedImage}
-                alt="Expanded Feed"
+                alt="Vista ampliada del artista"
+                width={1200}
+                height={1600}
                 className="w-auto h-auto max-h-[80vh] object-contain grayscale transition-all duration-500 group-hover:grayscale-0"
               />
             </div>

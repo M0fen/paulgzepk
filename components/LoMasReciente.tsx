@@ -154,7 +154,7 @@ export default function LoMasReciente() {
                 <iframe
                   className="w-full h-full"
                   src={`https://www.youtube.com/embed/${YOUTUBE_IDS[activeIndex]}?rel=0&modestbranding=1&autoplay=1`}
-                  title={`Video ${activeIndex + 1}`}
+                  title={`PaulGZ — Reproductor de YouTube, video ${activeIndex + 1} de ${YOUTUBE_IDS.length}`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -168,11 +168,13 @@ export default function LoMasReciente() {
                   aria-label="Play video"
                 >
                   {/* YouTube maxresdefault thumbnail */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={`https://img.youtube.com/vi/${YOUTUBE_IDS[activeIndex]}/maxresdefault.jpg`}
-                    alt={`Video thumbnail ${activeIndex + 1}`}
-                    className="w-full h-full object-cover grayscale-[60%] group-hover:grayscale-0 transition-all duration-500"
+                    alt={`PaulGZ — Video ${activeIndex + 1} de ${YOUTUBE_IDS.length}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 900px"
+                    className="object-cover grayscale-[60%] group-hover:grayscale-0 transition-all duration-500"
+                    unoptimized
                   />
                   {/* Dark overlay */}
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />

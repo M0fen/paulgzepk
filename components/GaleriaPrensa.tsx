@@ -51,6 +51,21 @@ export default function GaleriaPrensa() {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // ESC to close + scroll-lock while modal is open
+  useEffect(() => {
+    if (!selectedImage) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedImage(null);
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [selectedImage]);
+
   // Track which card is centered via IntersectionObserver
   useEffect(() => {
     const container = scrollRef.current;
@@ -273,11 +288,12 @@ export default function GaleriaPrensa() {
               <ViewfinderCorners />
 
               {/* Image */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={src}
-                alt={`GZ Feed CAM_0${i + 1}`}
-                className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                alt={`PaulGZ — Feed CAM_0${i + 1}`}
+                fill
+                sizes="(max-width: 768px) 85vw, (max-width: 1024px) 60vw, 450px"
+                className="object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
               />
             </motion.button>
           ))}
@@ -313,6 +329,9 @@ export default function GaleriaPrensa() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Vista ampliada de imagen"
               className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-12"
               onClick={() => setSelectedImage(null)}
             >
@@ -346,10 +365,11 @@ export default function GaleriaPrensa() {
                   </span>
                 </div>
 
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={selectedImage}
-                  alt="Expanded Feed"
+                  alt="Vista ampliada de la galería"
+                  width={1600}
+                  height={1200}
                   className="w-auto max-h-[85vh] object-contain opacity-90"
                 />
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import ScrambleText from "@/components/ScrambleText";
 
@@ -243,10 +244,12 @@ export default function Hero() {
         <div
           className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden z-0"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src="/paul_bg_kanji.png"
-            alt="忠"
+            alt="忠 — Lealtad"
+            width={900}
+            height={900}
+            priority
             className="w-auto h-[120%] lg:h-[150%] max-w-none opacity-[0.18] mix-blend-screen animate-kanji-pulse"
           />
         </div>

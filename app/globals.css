@@ -385,3 +385,27 @@ h6 {
 .yt-play-btn:hover svg {
   fill: #fff;
 }
+
+/* ══════════════════════════════════════════
+   REDUCED MOTION — accessibility
+   Disable decorative animations for users
+   who request reduced motion.
+   ══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ticker-animate,
+  .animate-kanji-pulse,
+  .animate-neon-flicker,
+  .animate-blink,
+  .animate-cyber-glitch {
+    animation: none !important;
+  }
+}
