@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Mono, Syncopate } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import TickerTape from "@/components/TickerTape";
 import "./globals.css";
 
@@ -85,6 +86,7 @@ export default function RootLayout({
         <div className="crt-scanlines" aria-hidden="true" />
         {/* ── Global Noise Grain Overlay ── */}
         <div className="noise-grain" aria-hidden="true" />
+        <Analytics />
       </body>
     </html>
   );
