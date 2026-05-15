@@ -1,133 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import ScrambleText from "@/components/ScrambleText";
-
-/* ── Dropdown Teaser Component ── */
-function TeaserDropdown() {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Close on outside click
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  return (
-    <div ref={dropdownRef} className="absolute top-8 right-6 z-50 sm:top-10 sm:right-10">
-      {/* Trigger */}
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-3 rounded-full border border-white/20 bg-black/90 px-5 py-2.5 backdrop-blur-xl transition-colors duration-300 hover:border-white/40 hover:bg-black/95 shadow-lg shadow-black/40"
-      >
-        {/* Green Pulsing Status Dot */}
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60"></span>
-          <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400/30 animate-pulse"></span>
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
-        </span>
-        <span className="font-mono text-xs sm:text-sm font-semibold tracking-[0.15em] text-neutral-200 uppercase">
-          LO QUE SE VIENE, NO SE ME DESCONECTE
-        </span>
-        {/* Chevron */}
-        <svg
-          className={`w-3 h-3 text-neutral-400 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-
-      {/* Dropdown Panel */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8, scaleY: 0.95 }}
-            animate={{ opacity: 1, y: 0, scaleY: 1 }}
-            exit={{ opacity: 0, y: -8, scaleY: 0.95 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="absolute right-0 mt-3 w-[90vw] sm:w-[500px] origin-top bg-black/95 backdrop-blur-md border border-neutral-600 shadow-[0_0_20px_rgba(255,255,255,0.05)] rounded-md overflow-hidden"
-          >
-            {/* Header */}
-            <div className="px-5 pt-4 pb-3">
-              <p className="text-white font-mono text-sm tracking-widest font-bold uppercase">
-                // PALOS EN PROCESO
-              </p>
-            </div>
-
-            <div className="px-5 pb-2">
-              {/* Column Headers */}
-              <div className="flex justify-between items-center text-neutral-400 font-mono text-xs tracking-[0.2em] border-b border-neutral-700 pb-2 uppercase w-full px-2">
-                <span>// PROJECT_CODE</span>
-                <span>// FEATURED</span>
-                <span>// DATE_TBA</span>
-              </div>
-
-              {/* Grid Container for Rows */}
-              <div className="grid grid-cols-1 gap-4 items-center mt-2 w-full">
-                {/* Row 1: ENCRIPTADO */}
-                <div className="group flex items-center justify-between py-3 px-2 hover:bg-white/5 transition-colors duration-200 border-b border-neutral-800 last:border-0 cursor-default">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-1.5 w-1.5 shrink-0">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-60"></span>
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-600"></span>
-                    </span>
-                    <span className="text-red-600 font-mono text-sm tracking-widest uppercase">
-                      [ ENCRIPTADO ]
-                    </span>
-                  </div>
-                  <span className="text-white font-mono text-sm tracking-widest uppercase text-center pl-6">
-                    Solo
-                  </span>
-                  <span className="text-white font-mono text-sm tracking-widest uppercase text-right">
-                    TBA
-                  </span>
-                </div>
-
-                {/* Row 2: ENCRIPTADO #2 */}
-                <div className="group flex items-center justify-between py-3 px-2 hover:bg-white/5 transition-colors duration-200 border-b border-neutral-800 last:border-0 cursor-default">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-1.5 w-1.5 shrink-0">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-60" style={{ animationDelay: "0.5s" }}></span>
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-600"></span>
-                    </span>
-                    <span className="text-red-600 font-mono text-sm tracking-widest uppercase">
-                      [ ENCRIPTADO ]
-                    </span>
-                  </div>
-                  <span className="text-neutral-500 font-mono text-sm tracking-widest uppercase text-center pl-6">
-                    ???
-                  </span>
-                  <span className="text-white font-mono text-sm tracking-widest uppercase text-right">
-                    TBA
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="bg-white/[0.02] px-5 pb-3">
-              <p className="text-neutral-400 font-mono text-[10px] tracking-widest border-t border-neutral-700 pt-3 w-full text-center uppercase">
-                STATUS: COCINÁNDOSE
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
 
 /* ── Valle de Aburrá Topographic Overlay ── */
 function TopographySVG() {
@@ -231,9 +107,6 @@ export default function Hero() {
       ref={containerRef}
       className="relative w-full min-h-[100svh] flex flex-col justify-center overflow-hidden bg-black"
     >
-      {/* ── Dropdown Teaser (Top-Right) ── */}
-      <TeaserDropdown />
-
       {/* ═══ Ghost Fade wrapper — all visible content ═══ */}
       <motion.div
         className="relative z-10 flex flex-col items-center justify-center w-full h-full transform-gpu will-change-transform"
