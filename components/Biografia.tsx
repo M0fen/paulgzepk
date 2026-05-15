@@ -396,7 +396,7 @@ export default function Biografia() {
 
             {/* Tactical Navigation HUD */}
             <div className="flex justify-between items-center w-full border-t border-neutral-800/50 pt-4 mt-2">
-              <span className="font-mono text-[10px] text-neutral-500 tracking-[0.2em]">// SWIPE_TO_NAVIGATE</span>
+              <span className="font-mono text-[10px] text-neutral-500 tracking-[0.2em]">// DESLIZA PARA VER MÁS   </span>
               <div className="flex gap-2">
                 <div className="w-8 h-1 bg-red-600"></div>
                 <div className="w-2 h-1 bg-neutral-700"></div>

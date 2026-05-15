@@ -29,7 +29,7 @@ function ViewfinderCorners() {
       xmlns="http://www.w3.org/2000/svg"
     >
       {/* Top-left */}
-      <polyline points="0,10 0,0 10,0"   stroke="rgba(255,255,255,0.55)" strokeWidth="0.8" />
+      <polyline points="0,10 0,0 10,0" stroke="rgba(255,255,255,0.55)" strokeWidth="0.8" />
       {/* Top-right */}
       <polyline points="90,0 100,0 100,10" stroke="rgba(255,255,255,0.55)" strokeWidth="0.8" />
       {/* Bottom-left */}
@@ -212,174 +212,173 @@ export default function GaleriaPrensa() {
 
       <div className="relative z-10 max-w-6xl mx-auto">
 
-      {/* Section Header — Industrial Bounding Box */}
-      <div className="relative w-full border border-neutral-800/60 border-l-4 border-l-red-600 bg-neutral-950/80 p-5 md:p-8 mb-10 shadow-[inset_0_0_30px_rgba(0,0,0,0.8)] flex flex-col md:flex-row md:items-center justify-between overflow-hidden">
-        {/* Background accent */}
-        <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 to-transparent pointer-events-none" />
-        <div className="relative z-10">
-          {/* Pre-label */}
-          <p className="font-mono text-[10px] tracking-[0.5em] text-neutral-600 uppercase mb-3">
+        {/* Section Header — Industrial Bounding Box */}
+        <div className="relative w-full border border-neutral-800/60 border-l-4 border-l-red-600 bg-neutral-950/80 p-5 md:p-8 mb-10 shadow-[inset_0_0_30px_rgba(0,0,0,0.8)] flex flex-col md:flex-row md:items-center justify-between overflow-hidden">
+          {/* Background accent */}
+          <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 to-transparent pointer-events-none" />
+          <div className="relative z-10">
+            {/* Pre-label */}
+            <p className="font-mono text-[10px] tracking-[0.5em] text-neutral-600 uppercase mb-3">
             // TACTICAL_FEED — LIVE_ARCHIVE
-          </p>
-          <h2 className="font-display font-bold text-xl sm:text-2xl lg:text-4xl text-red-600 uppercase tracking-widest">
-            <span className="animate-neon-flicker">{"// GALERÍA DEL ARTISTA"}</span>
-            <span className="animate-blink">_</span>
-          </h2>
-          {/* Rule */}
-          <div className="mt-3 flex items-center gap-3">
-            <div className="h-px w-24 bg-gradient-to-r from-red-700/50 to-transparent" />
-            <span className="font-mono text-[8px] tracking-[0.4em] text-neutral-700 uppercase">
-              {PRESS_ASSETS.length} UNITS // AUTHENTICATED
-            </span>
-          </div>
-        </div>
-        <span className="relative z-10 font-mono text-[10px] md:text-xs tracking-[0.3em] text-neutral-600 mt-2 md:mt-0 uppercase">ID: VISUAL_FEED</span>
-      </div>
-
-      {/* Infrared Tactical Carousel */}
-      <div
-        ref={scrollRef}
-        className="w-full flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-8 pb-8 pt-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden mt-8"
-      >
-        {PRESS_ASSETS.map((src, i) => (
-          <motion.button
-            key={i}
-            type="button"
-            onClick={() => setSelectedImage(src)}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="group relative flex-none w-[85vw] sm:w-[60vw] md:w-[400px] lg:w-[450px] snap-center aspect-[4/5] p-[2px] bg-neutral-900 border border-neutral-700/50 shadow-2xl overflow-hidden cursor-crosshair transition-all duration-300 hover:border-neutral-500 block text-left"
-            data-gallery-card={i}
-          >
-            {/* Top-Left: Micro-LED */}
-            <div className="absolute top-3 left-3 w-1.5 h-1.5 rounded-full bg-neutral-800 group-hover:bg-[#FF0000] group-hover:shadow-[0_0_8px_#FF0000] transition-all duration-300 z-20" />
-
-            {/* Bottom-Right: Etched serial text */}
-            <span className="absolute bottom-2 right-2 font-mono text-[9px] text-neutral-600 tracking-widest z-20">
-              SYS.CAM_0{i + 1}
-            </span>
-
-            {/* ── Tactical VIEW_FILE Overlay ── */}
-            <div className="absolute inset-[2px] z-30 flex flex-col items-center justify-center gap-3 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-              {/* Crosshair visor icon */}
-              <svg
-                className="w-12 h-12 text-white/70"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1}
-              >
-                <circle cx="12" cy="12" r="6" />
-                <line x1="12" y1="2" x2="12" y2="6" />
-                <line x1="12" y1="18" x2="12" y2="22" />
-                <line x1="2" y1="12" x2="6" y2="12" />
-                <line x1="18" y1="12" x2="22" y2="12" />
-                {/* Center plus */}
-                <line x1="11" y1="12" x2="13" y2="12" strokeWidth={2} />
-                <line x1="12" y1="11" x2="12" y2="13" strokeWidth={2} />
-              </svg>
-              <span className="font-mono text-[10px] tracking-[0.4em] text-white/80 uppercase">
-                [ VIEW_FILE ]
-              </span>
-              {/* Bottom metadata */}
-              <span className="absolute bottom-4 left-4 font-mono text-[8px] tracking-[0.3em] text-neutral-500 uppercase">
-                {FEED_DATA[i]?.cam ?? `CAM_0${i+1}`} // {FEED_DATA[i]?.sector ?? "UNKNOWN"}
+            </p>
+            <h2 className="font-display font-bold text-xl sm:text-2xl lg:text-4xl text-red-600 uppercase tracking-widest">
+              <span className="animate-neon-flicker">{"// GALERÍA DEL ARTISTA"}</span>
+              <span className="animate-blink">_</span>
+            </h2>
+            {/* Rule */}
+            <div className="mt-3 flex items-center gap-3">
+              <div className="h-px w-24 bg-gradient-to-r from-red-700/50 to-transparent" />
+              <span className="font-mono text-[8px] tracking-[0.4em] text-neutral-700 uppercase">
+                {PRESS_ASSETS.length} UNITS // AUTHENTICATED
               </span>
             </div>
-
-            {/* Tactical Red Overlay (Infrared lens effect) */}
-            <div className="absolute inset-[2px] bg-red-900/40 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10 pointer-events-none" />
-
-            {/* Viewfinder Corners */}
-            <ViewfinderCorners />
-
-            {/* Image */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={src}
-              alt={`GZ Feed CAM_0${i + 1}`}
-              className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
-            />
-          </motion.button>
-        ))}
-      </div>
-
-      {/* Tactical Navigation HUD */}
-      <div className="flex justify-between items-center w-full border-t border-neutral-800/50 pt-4 mt-2">
-        <span className="font-mono text-[10px] text-neutral-500 tracking-[0.2em]">// SWIPE_TO_NAVIGATE</span>
-        <div className="flex gap-2">
-          {PRESS_ASSETS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => {
-                const container = scrollRef.current;
-                if (!container) return;
-                const cards = container.querySelectorAll<HTMLElement>("[data-gallery-card]");
-                cards[i]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-              }}
-              className={`h-1 transition-all duration-300 ${
-                i === activeIndex
-                  ? "w-8 bg-red-600"
-                  : "w-2 bg-neutral-700 hover:bg-neutral-500"
-              }`}
-              aria-label={`Go to image ${i + 1}`}
-            />
-          ))}
+          </div>
+          <span className="relative z-10 font-mono text-[10px] md:text-xs tracking-[0.3em] text-neutral-600 mt-2 md:mt-0 uppercase">ID: VISUAL_FEED</span>
         </div>
-      </div>
 
-      {/* Lightbox / Modal */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-12"
-            onClick={() => setSelectedImage(null)}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-6 right-6 md:top-8 md:right-8 lg:top-12 lg:right-12 z-[110] font-mono text-sm tracking-widest text-neutral-400 hover:text-[#FF0000] transition-colors duration-300 pointer-events-auto"
+        {/* Infrared Tactical Carousel */}
+        <div
+          ref={scrollRef}
+          className="w-full flex overflow-x-auto snap-x snap-mandatory gap-4 md:gap-8 pb-8 pt-4 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden mt-8"
+        >
+          {PRESS_ASSETS.map((src, i) => (
+            <motion.button
+              key={i}
+              type="button"
+              onClick={() => setSelectedImage(src)}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="group relative flex-none w-[85vw] sm:w-[60vw] md:w-[400px] lg:w-[450px] snap-center aspect-[4/5] p-[2px] bg-neutral-900 border border-neutral-700/50 shadow-2xl overflow-hidden cursor-crosshair transition-all duration-300 hover:border-neutral-500 block text-left"
+              data-gallery-card={i}
             >
-              [ X_CLOSE_VIEWER ]
-            </button>
+              {/* Top-Left: Micro-LED */}
+              <div className="absolute top-3 left-3 w-1.5 h-1.5 rounded-full bg-neutral-800 group-hover:bg-[#FF0000] group-hover:shadow-[0_0_8px_#FF0000] transition-all duration-300 z-20" />
 
-            {/* Modal Image Container */}
-            <div
-              className="relative max-w-5xl max-h-[90vh] border border-neutral-800 bg-black flex item-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Overlay elements */}
-              <div className="absolute top-4 left-4 z-[110] flex items-center gap-2 pointer-events-none">
-                <span className="relative flex h-[6px] w-[6px]">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 animate-ping opacity-80"></span>
-                  <span className="relative inline-flex h-[6px] w-[6px] rounded-full bg-red-600"></span>
+              {/* Bottom-Right: Etched serial text */}
+              <span className="absolute bottom-2 right-2 font-mono text-[9px] text-neutral-600 tracking-widest z-20">
+                SYS.CAM_0{i + 1}
+              </span>
+
+              {/* ── Tactical VIEW_FILE Overlay ── */}
+              <div className="absolute inset-[2px] z-30 flex flex-col items-center justify-center gap-3 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+                {/* Crosshair visor icon */}
+                <svg
+                  className="w-12 h-12 text-white/70"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1}
+                >
+                  <circle cx="12" cy="12" r="6" />
+                  <line x1="12" y1="2" x2="12" y2="6" />
+                  <line x1="12" y1="18" x2="12" y2="22" />
+                  <line x1="2" y1="12" x2="6" y2="12" />
+                  <line x1="18" y1="12" x2="22" y2="12" />
+                  {/* Center plus */}
+                  <line x1="11" y1="12" x2="13" y2="12" strokeWidth={2} />
+                  <line x1="12" y1="11" x2="12" y2="13" strokeWidth={2} />
+                </svg>
+                <span className="font-mono text-[10px] tracking-[0.4em] text-white/80 uppercase">
+                  [ VIEW_FILE ]
                 </span>
-                <span className="text-[10px] font-mono text-neutral-300 uppercase tracking-widest">
-                  // IMG_ANALYSIS: ACTIVE
+                {/* Bottom metadata */}
+                <span className="absolute bottom-4 left-4 font-mono text-[8px] tracking-[0.3em] text-neutral-500 uppercase">
+                  {FEED_DATA[i]?.cam ?? `CAM_0${i + 1}`} // {FEED_DATA[i]?.sector ?? "UNKNOWN"}
                 </span>
               </div>
-              
-              <div className="absolute bottom-4 right-4 z-[110] pointer-events-none">
-                <span className="text-neutral-500 font-mono text-xs tracking-[0.2em] uppercase">
-                  SYS_ID: GZ-2026-RAW
-                </span>
-              </div>
 
+              {/* Tactical Red Overlay (Infrared lens effect) */}
+              <div className="absolute inset-[2px] bg-red-900/40 mix-blend-multiply transition-opacity duration-500 group-hover:opacity-0 z-10 pointer-events-none" />
+
+              {/* Viewfinder Corners */}
+              <ViewfinderCorners />
+
+              {/* Image */}
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={selectedImage}
-                alt="Expanded Feed"
-                className="w-auto max-h-[85vh] object-contain opacity-90"
+                src={src}
+                alt={`GZ Feed CAM_0${i + 1}`}
+                className="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
               />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.button>
+          ))}
+        </div>
+
+        {/* Tactical Navigation HUD */}
+        <div className="flex justify-between items-center w-full border-t border-neutral-800/50 pt-4 mt-2">
+          <span className="font-mono text-[10px] text-neutral-500 tracking-[0.2em]">// DESLIZA PARA VER LAS FOTOS</span>
+          <div className="flex gap-2">
+            {PRESS_ASSETS.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  const container = scrollRef.current;
+                  if (!container) return;
+                  const cards = container.querySelectorAll<HTMLElement>("[data-gallery-card]");
+                  cards[i]?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+                }}
+                className={`h-1 transition-all duration-300 ${i === activeIndex
+                    ? "w-8 bg-red-600"
+                    : "w-2 bg-neutral-700 hover:bg-neutral-500"
+                  }`}
+                aria-label={`Go to image ${i + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Lightbox / Modal */}
+        <AnimatePresence>
+          {selectedImage && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-12"
+              onClick={() => setSelectedImage(null)}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-6 right-6 md:top-8 md:right-8 lg:top-12 lg:right-12 z-[110] font-mono text-sm tracking-widest text-neutral-400 hover:text-[#FF0000] transition-colors duration-300 pointer-events-auto"
+              >
+                [ X_CLOSE_VIEWER ]
+              </button>
+
+              {/* Modal Image Container */}
+              <div
+                className="relative max-w-5xl max-h-[90vh] border border-neutral-800 bg-black flex item-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Overlay elements */}
+                <div className="absolute top-4 left-4 z-[110] flex items-center gap-2 pointer-events-none">
+                  <span className="relative flex h-[6px] w-[6px]">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 animate-ping opacity-80"></span>
+                    <span className="relative inline-flex h-[6px] w-[6px] rounded-full bg-red-600"></span>
+                  </span>
+                  <span className="text-[10px] font-mono text-neutral-300 uppercase tracking-widest">
+                  // IMG_ANALYSIS: ACTIVE
+                  </span>
+                </div>
+
+                <div className="absolute bottom-4 right-4 z-[110] pointer-events-none">
+                  <span className="text-neutral-500 font-mono text-xs tracking-[0.2em] uppercase">
+                    SYS_ID: GZ-2026-RAW
+                  </span>
+                </div>
+
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={selectedImage}
+                  alt="Expanded Feed"
+                  className="w-auto max-h-[85vh] object-contain opacity-90"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div> {/* close max-w-6xl wrapper */}
     </motion.section>
