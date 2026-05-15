@@ -4,23 +4,58 @@ import { motion } from "framer-motion";
 
 const RELEASES = [
   {
-    track: "Unknown",
+    track: "SOLA",
     feat: "Santos OG",
-    location: "PEREIRA x MEDALLO",
-    date: "ABRIL - XXXX",
+    album: "PEREIRA X MEDALLO",
+    date: "YA DISPONIBLE",
+    status: "confirmed" as const,
+  },
+  {
+    track: "MARBELLA",
+    feat: "Sativaa",
+    album: "SENCILLO",
+    date: "YA DISPONIBLE",
+    status: "confirmed" as const,
+  },
+  {
+    track: "SUELTATE",
+    feat: "Santos OG",
+    album: "PEREIRA X MEDALLO",
+    date: "YA DISPONIBLE",
+    status: "confirmed" as const,
+  },
+  {
+    track: "ROMANTIKEO",
+    feat: "Santos OG",
+    album: "PEREIRA X MEDALLO",
+    date: "YA DISPONIBLE",
+    status: "confirmed" as const,
+  },
+  {
+    track: "MANIATIKOS",
+    feat: "Santos OG",
+    album: "PEREIRA X MEDALLO",
+    date: "YA DISPONIBLE",
+    status: "confirmed" as const,
+  },
+  {
+    track: "2KCLASSIC",
+    feat: "Santos OG",
+    album: "PEREIRA X MEDALLO",
+    date: "YA DISPONIBLE",
+    status: "confirmed" as const,
+  },
+  {
+    track: "CLA CLA",
+    feat: "Santos OG",
+    album: "PEREIRA X MEDALLO",
+    date: "YA DISPONIBLE",
     status: "confirmed" as const,
   },
   {
     track: "[ ENCRIPTADO ]",
     feat: null,
-    location: null,
-    date: "TBA",
-    status: "encrypted" as const,
-  },
-  {
-    track: "[ ENCRIPTADO ]",
-    feat: null,
-    location: null,
+    album: null,
     date: "TBA",
     status: "encrypted" as const,
   },
@@ -93,7 +128,7 @@ export default function ProximosLanzamientos() {
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black to-transparent pointer-events-none z-[5]" />
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div className="relative z-10 max-w-5xl mx-auto">
 
         {/* Section Header — Industrial Bounding Box (matching all other sections) */}
         <motion.div
@@ -126,34 +161,47 @@ export default function ProximosLanzamientos() {
 
         {/* Column Labels (desktop only) */}
         <div className="hidden sm:flex justify-between px-4 pb-3 border-b border-neutral-700">
-          <div className="flex gap-12">
-            <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase w-44">
+          <div className="flex gap-4 sm:gap-8 w-full max-w-[75%]">
+            <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase w-44 shrink-0">
               TRACK
             </span>
+            <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase w-32 shrink-0">
+              FEAT
+            </span>
             <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase">
-              FEAT / INFO
+              ALBUM
             </span>
           </div>
-          <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase">
+          <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-600 uppercase text-right">
             RELEASE
           </span>
         </div>
 
         {/* Data Rows */}
-        <ul className="divide-y divide-neutral-800/60">
+        <motion.ul 
+          className="divide-y divide-neutral-800/60"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } },
+            hidden: {},
+          }}
+        >
           {RELEASES.map((release, i) => (
             <motion.li
               key={i}
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-4 hover:bg-neutral-900/50 transition-colors duration-200 group"
+              variants={{
+                hidden: { opacity: 0, x: -15, filter: "blur(4px)" },
+                visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row sm:items-center justify-between py-4 px-4 hover:bg-neutral-900/50 hover:scale-[1.01] transition-all duration-300 group"
             >
               {/* Left block */}
-              <div className="flex flex-col sm:flex-row sm:gap-12">
+              <div className="flex flex-col sm:flex-row sm:gap-4 sm:gap-8 w-full sm:max-w-[75%]">
                 {/* Track name */}
-                <div className="flex items-center gap-2 sm:w-44">
+                <div className="flex items-center gap-2 sm:w-44 shrink-0">
                   {/* Status indicator */}
                   <span
                     className={`inline-block w-1.5 h-1.5 rounded-full flex-shrink-0 ${
@@ -173,24 +221,24 @@ export default function ProximosLanzamientos() {
                   </span>
                 </div>
 
-                {/* Feat / Info */}
-                <span className="font-mono text-xs text-neutral-400 tracking-wide mt-1 sm:mt-0 pl-4 sm:pl-0">
+                {/* Feat */}
+                <span className="font-mono text-xs text-neutral-400 tracking-wide mt-1 sm:mt-0 pl-4 sm:pl-0 sm:w-32 shrink-0">
                   {release.feat
                     ? `ft. ${release.feat}`
                     : release.status === "encrypted"
                       ? "—"
-                      : ""}
-                  {release.location && (
-                    <span className="text-neutral-600 ml-3">
-                      // {release.location}
-                    </span>
-                  )}
+                      : "—"}
+                </span>
+
+                {/* Album */}
+                <span className="font-mono text-xs text-brand-red/80 tracking-wide mt-1 sm:mt-0 pl-4 sm:pl-0 truncate">
+                  {release.album ? `[${release.album}]` : "—"}
                 </span>
               </div>
 
               {/* Right block: Date */}
               <span
-                className={`font-mono text-xs tracking-[0.2em] uppercase mt-2 sm:mt-0 pl-4 sm:pl-0 ${
+                className={`font-mono text-xs tracking-[0.2em] uppercase mt-2 sm:mt-0 pl-4 sm:pl-0 sm:text-right ${
                   release.status === "encrypted"
                     ? "text-neutral-600 blur-[1px] select-none"
                     : "text-white"
@@ -200,7 +248,7 @@ export default function ProximosLanzamientos() {
               </span>
             </motion.li>
           ))}
-        </ul>
+        </motion.ul>
 
         {/* Footer line */}
         <div className="mt-8 flex items-center gap-3">

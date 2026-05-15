@@ -97,14 +97,12 @@ function TechFrame({
             {/* Micro-LED status indicator */}
             <span className="relative flex h-[5px] w-[5px]">
               <span
-                className={`absolute inline-flex h-full w-full rounded-full animate-ping opacity-60 ${
-                  isEmerald ? "bg-emerald-400" : "bg-red-500"
-                }`}
+                className={`absolute inline-flex h-full w-full rounded-full animate-ping opacity-60 ${isEmerald ? "bg-emerald-400" : "bg-red-500"
+                  }`}
               ></span>
               <span
-                className={`relative inline-flex h-[5px] w-[5px] rounded-full ${
-                  isEmerald ? "bg-emerald-500" : "bg-red-600"
-                }`}
+                className={`relative inline-flex h-[5px] w-[5px] rounded-full ${isEmerald ? "bg-emerald-500" : "bg-red-600"
+                  }`}
                 style={{
                   boxShadow: isEmerald
                     ? "0 0 4px rgba(16,185,129,0.9)"
@@ -443,7 +441,7 @@ export default function Biografia() {
                   // IMG_ANALYSIS: ACTIVE
                 </span>
               </div>
-              
+
               <div className="absolute bottom-4 right-4 z-[110] pointer-events-none bg-black/60 px-2 py-1 backdrop-blur-md">
                 <span className="text-neutral-500 font-mono text-xs tracking-[0.2em] uppercase">
                   SYS_ID: GZ-2026-RAW // UNIT_SPEC: {selectedImage}

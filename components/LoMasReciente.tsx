@@ -3,7 +3,15 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const YOUTUBE_IDS = ["B__qO1BXMDc", "0NwFCM7cPvY", "S4Xw6iLqKFg"];
+const YOUTUBE_IDS = [
+  "VqIUee3oAX8",
+  "tOjheAAzuXY",
+  "faRJ1ddGJvE",
+  "hXvbQ4AHt9g",
+  "bpwmRTf_tXI",
+  "Q_zp8aR6STs",
+  "530MV4yHVfg"
+];
 
 export default function LoMasReciente() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -140,7 +148,7 @@ export default function LoMasReciente() {
               // MEDIA_STREAM — LATEST_OUTPUT
             </p>
             <h2 className="font-display font-bold text-xl sm:text-2xl lg:text-4xl text-brand-red uppercase tracking-widest">
-              <span className="animate-neon-flicker">{"// ULTIMOS LANZAMIENTOS"}</span>
+              <span className="animate-neon-flicker">{"// DISPONIBLE AHORA"}</span>
               <span className="animate-blink">_</span>
             </h2>
           </div>
