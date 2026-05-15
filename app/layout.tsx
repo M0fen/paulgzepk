@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Mono, Syncopate } from "next/font/google";
 import TickerTape from "@/components/TickerTape";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -80,6 +81,7 @@ export default function RootLayout({
           {children}
         </div>
         <TickerTape />
+        <Analytics />
 
         {/* ── Global CRT Scanlines Overlay ── */}
         <div className="crt-scanlines" aria-hidden="true" />
