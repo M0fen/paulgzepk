@@ -13,7 +13,7 @@ const TRACKS = [
   "2KCLASSIC",
   "SUELTATE",
   "ROMANTIKEO",
-  "CLACK CLACK",
+  "CLACK CLACK CLACK",
 ];
 
 export default function ReleaseBanner() {

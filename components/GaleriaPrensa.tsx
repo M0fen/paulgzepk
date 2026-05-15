@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import TopoOverlay from "@/components/TopoOverlay";
 
 /* ── Static feed metadata per image ── */
 const FEED_DATA = [
@@ -82,32 +84,7 @@ export default function GaleriaPrensa() {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* Topographic SVG convergence overlay */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.08] transition-opacity duration-500 group-hover/section:opacity-[0.12]"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        <defs>
-          <radialGradient id="gal-topo-fade" cx="40%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="white" stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="gal-topo-mask">
-            <rect width="100%" height="100%" fill="url(#gal-topo-fade)" />
-          </mask>
-        </defs>
-        <g mask="url(#gal-topo-mask)" stroke="white" strokeWidth="0.5">
-          {[35, 70, 110, 155, 210, 275, 350, 440].map((r, i) => (
-            <ellipse key={i} cx="40%" cy="55%" rx={r} ry={r * 0.55} />
-          ))}
-          <line x1="0" y1="40%" x2="100%" y2="40%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="0" y1="60%" x2="100%" y2="60%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="40%" y1="0" x2="40%" y2="100%" strokeWidth="0.3" strokeDasharray="3 14" />
-        </g>
-      </svg>
+      <TopoOverlay variant="galeria" />
 
       {/* Street Waves — Audio Frequency → Medellín Hill Skyline */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] overflow-hidden">

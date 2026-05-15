@@ -46,7 +46,7 @@ const RELEASES = [
     status: "confirmed" as const,
   },
   {
-    track: "CLA CLA",
+    track: "CLACK CLACK CLACK",
     feat: "Santos OG",
     album: "PEREIRA X MEDALLO",
     date: "YA DISPONIBLE",
@@ -142,21 +142,21 @@ export default function ProximosLanzamientos() {
           <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 to-transparent pointer-events-none" />
           <div className="relative z-10">
             <p className="font-mono text-[10px] tracking-[0.5em] text-neutral-600 uppercase mb-3">
-              // TACTICAL_RADAR — INCOMING_SIGNALS
+              // CATALOG_FEED — ACTIVE_TRACKS
             </p>
             <h2 className="font-display font-bold text-xl sm:text-2xl lg:text-4xl text-brand-red uppercase tracking-widest">
-              <span className="animate-neon-flicker">{"// RADAR DE LANZAMIENTOS"}</span>
+              <span className="animate-neon-flicker">{"// DISCOGRAFÍA"}</span>
               <span className="animate-blink">_</span>
             </h2>
             {/* Rule */}
             <div className="mt-3 flex items-center gap-3">
               <div className="h-px w-24 bg-gradient-to-r from-red-700/50 to-transparent" />
               <span className="font-mono text-[8px] tracking-[0.4em] text-neutral-700 uppercase">
-                {RELEASES.length} SIGNALS // TRACKING
+                {RELEASES.length} TRACKS // CATALOGADOS
               </span>
             </div>
           </div>
-          <span className="relative z-10 font-mono text-[10px] md:text-xs tracking-[0.3em] text-neutral-600 mt-2 md:mt-0 uppercase">ID: RELEASE_RADAR</span>
+          <span className="relative z-10 font-mono text-[10px] md:text-xs tracking-[0.3em] text-neutral-600 mt-2 md:mt-0 uppercase">ID: DISCOGRAPHY</span>
         </motion.div>
 
         {/* Column Labels (desktop only) */}
@@ -254,7 +254,7 @@ export default function ProximosLanzamientos() {
         <div className="mt-8 flex items-center gap-3">
           <div className="h-px flex-1 bg-neutral-800" />
           <span className="font-mono text-[9px] tracking-[0.4em] text-neutral-700 uppercase">
-            SYS.RADAR // LIVE_FEED
+            SYS.CATALOG // LIVE_FEED
           </span>
           <div className="h-px flex-1 bg-neutral-800" />
         </div>

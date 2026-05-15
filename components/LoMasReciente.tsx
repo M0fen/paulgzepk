@@ -2,6 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import TopoOverlay from "@/components/TopoOverlay";
 
 const YOUTUBE_IDS = [
   "VqIUee3oAX8",
@@ -42,32 +44,7 @@ export default function LoMasReciente() {
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* Topographic SVG convergence overlay */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.08] transition-opacity duration-500 group-hover/section:opacity-[0.12]"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        <defs>
-          <radialGradient id="rec-topo-fade" cx="55%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="white" stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="rec-topo-mask">
-            <rect width="100%" height="100%" fill="url(#rec-topo-fade)" />
-          </mask>
-        </defs>
-        <g mask="url(#rec-topo-mask)" stroke="white" strokeWidth="0.5">
-          {[30, 65, 105, 150, 200, 260, 330, 410].map((r, i) => (
-            <ellipse key={i} cx="55%" cy="48%" rx={r} ry={r * 0.58} />
-          ))}
-          <line x1="0" y1="38%" x2="100%" y2="38%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="0" y1="62%" x2="100%" y2="62%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="55%" y1="0" x2="55%" y2="100%" strokeWidth="0.3" strokeDasharray="3 14" />
-        </g>
-      </svg>
+      <TopoOverlay variant="reciente" />
 
       {/* Cerro Nutibara — Topographic Elevation Map */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.04] overflow-hidden flex items-center justify-center">

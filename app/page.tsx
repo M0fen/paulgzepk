@@ -43,7 +43,7 @@ export default function Home() {
 
         <div
           className="section-divider relative"
-          data-label="// PRÓXIMOS LANZAMIENTOS //"
+          data-label="// DISCOGRAFÍA //"
         />
         <ProximosLanzamientos />
 

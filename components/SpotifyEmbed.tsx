@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import TopoOverlay from "@/components/TopoOverlay";
 
 export default function SpotifyEmbed() {
   return (

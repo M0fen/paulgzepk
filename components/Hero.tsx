@@ -75,26 +75,26 @@ function TeaserDropdown() {
 
               {/* Grid Container for Rows */}
               <div className="grid grid-cols-1 gap-4 items-center mt-2 w-full">
-                {/* Row 1: PEREIRA x MEDALLO */}
+                {/* Row 1: ENCRIPTADO */}
                 <div className="group flex items-center justify-between py-3 px-2 hover:bg-white/5 transition-colors duration-200 border-b border-neutral-800 last:border-0 cursor-default">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-1.5 w-1.5 shrink-0">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-60"></span>
                       <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-600"></span>
                     </span>
-                    <span className="text-white font-mono text-sm tracking-widest uppercase">
-                      PEREIRA X MEDALLO
+                    <span className="text-red-600 font-mono text-sm tracking-widest uppercase">
+                      [ ENCRIPTADO ]
                     </span>
                   </div>
-                  <span className="text-white font-mono text-sm tracking-widest uppercase text-center">
-                    Santos OG
+                  <span className="text-white font-mono text-sm tracking-widest uppercase text-center pl-6">
+                    Solo
                   </span>
                   <span className="text-white font-mono text-sm tracking-widest uppercase text-right">
-                    ABRIL - XXXX
+                    TBA
                   </span>
                 </div>
 
-                {/* Row 2: ENCRIPTADO */}
+                {/* Row 2: ENCRIPTADO #2 */}
                 <div className="group flex items-center justify-between py-3 px-2 hover:bg-white/5 transition-colors duration-200 border-b border-neutral-800 last:border-0 cursor-default">
                   <div className="flex items-center gap-2">
                     <span className="relative flex h-1.5 w-1.5 shrink-0">
@@ -105,8 +105,8 @@ function TeaserDropdown() {
                       [ ENCRIPTADO ]
                     </span>
                   </div>
-                  <span className="text-white font-mono text-sm tracking-widest uppercase text-center pl-6">
-                    Solo
+                  <span className="text-neutral-500 font-mono text-sm tracking-widest uppercase text-center pl-6">
+                    ???
                   </span>
                   <span className="text-white font-mono text-sm tracking-widest uppercase text-right">
                     TBA
@@ -193,9 +193,9 @@ function TopographySVG() {
 
       {/* Altitude markers — small ticks along contours */}
       <g fill="rgba(255,255,255,0.08)" fontSize="7" fontFamily="monospace">
-        <text x="125" y="465">2800m</text>
-        <text x="780" y="400">2600m</text>
-        <text x="420" y="625">1500m</text>
+        <text x="125" y="465">2400m</text>
+        <text x="780" y="400">2200m</text>
+        <text x="420" y="625">1495m</text>
         <text x="415" y="595">BELÉN</text>
         <text x="348" y="560">RÍO MEDELLÍN</text>
         <text x="690" y="510">ENVIGADO</text>

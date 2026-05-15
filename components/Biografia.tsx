@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import ScrambleText from "@/components/ScrambleText";
+import TopoOverlay from "@/components/TopoOverlay";
 
 /* ── Tech Metallic Frame ── */
 const FRAME_SPECS = [
@@ -187,35 +188,7 @@ export default function Biografia() {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
 
-      {/* Topographic SVG background — convergence overlay */}
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 w-full h-full opacity-[0.08] transition-opacity duration-500 group-hover/section:opacity-[0.12]"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMidYMid slice"
-        fill="none"
-      >
-        <defs>
-          <radialGradient id="bio-topo-fade" cx="60%" cy="50%" r="55%">
-            <stop offset="0%" stopColor="white" stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="bio-topo-mask">
-            <rect width="100%" height="100%" fill="url(#bio-topo-fade)" />
-          </mask>
-        </defs>
-        <g mask="url(#bio-topo-mask)" stroke="white" strokeWidth="0.5">
-          {/* Converging topographic contour rings */}
-          {[30, 60, 90, 130, 175, 225, 285, 355, 435, 525].map((r, i) => (
-            <ellipse key={i} cx="62%" cy="50%" rx={r} ry={r * 0.6} />
-          ))}
-          {/* Tactical horizontal rails */}
-          <line x1="0" y1="35%" x2="100%" y2="35%" strokeWidth="0.3" strokeDasharray="4 16" />
-          <line x1="0" y1="65%" x2="100%" y2="65%" strokeWidth="0.3" strokeDasharray="4 16" />
-          {/* Vertical axis */}
-          <line x1="62%" y1="0" x2="62%" y2="100%" strokeWidth="0.3" strokeDasharray="3 14" />
-        </g>
-      </svg>
+      <TopoOverlay variant="biografia" />
 
       {/* Hiroshi Naito / Belén Library — Isometric Architectural Grid */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] overflow-hidden">
@@ -368,13 +341,15 @@ export default function Biografia() {
 
             {/* Download CTA — below text, above images on mobile */}
             <div className="pt-2">
-              <a
-                href="/presskit.zip"
-                download
-                className="cta-glitch-btn inline-flex"
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="cta-glitch-btn inline-flex opacity-40 cursor-not-allowed"
+                title="Disponible próximamente"
               >
-                <ScrambleText text="// DESCARGAR PRESS KIT (ZIP) //" />
-              </a>
+                <ScrambleText text="// PRESS KIT // SOON //" />
+              </button>
             </div>
           </motion.div>
 

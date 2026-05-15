@@ -238,10 +238,12 @@ export default function BookingCTA() {
           </a>
 
           {/* ── FULL-WIDTH MODULE: Tech Rider Download — HIGH PRIORITY ── */}
-          <a
-            href="/tech_rider.pdf"
-            download
-            className="group col-span-1 md:col-span-2 mt-2 w-full p-6 border-2 border-red-800/60 bg-red-950/15 hover:bg-red-950/25 transition-all duration-300 hover:border-red-500/70 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden hover:shadow-[0_0_25px_rgba(255,0,0,0.08)]"
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            title="Disponible próximamente"
+            className="group col-span-1 md:col-span-2 mt-2 w-full p-6 border-2 border-red-800/60 bg-red-950/15 transition-all duration-300 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden opacity-50 cursor-not-allowed text-left"
           >
             {/* Subtle scan line on hover */}
             <div className="absolute inset-0 bg-gradient-to-r from-red-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -274,11 +276,11 @@ export default function BookingCTA() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              <span className="font-mono text-[11px] tracking-widest text-neutral-400 group-hover:text-red-400 transition-colors duration-200 uppercase font-bold">
-                [ INITIATE_TRANSFER ]
+              <span className="font-mono text-[11px] tracking-widest text-neutral-400 transition-colors duration-200 uppercase font-bold">
+                [ SOON ]
               </span>
             </div>
-          </a>
+          </button>
 
         </motion.div>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Mono, Syncopate, New_Tegomin } from "next/font/google";
+import { Inter, Space_Mono, Syncopate } from "next/font/google";
 import TickerTape from "@/components/TickerTape";
 import "./globals.css";
 
@@ -21,21 +21,25 @@ const syncopate = Syncopate({
   weight: ["400", "700"],
 });
 
-const orientalDisplay = New_Tegomin({
-  subsets: ["latin"],
-  variable: "--font-oriental-display",
-  weight: ["400"],
-});
-
 export const metadata: Metadata = {
+  metadataBase: new URL("https://paulgz.com"),
   title: "PaulGZ | Electronic Press Kit 2026",
   description:
-    "Reggaetón & Dancehall artist. Press Kit, música, booking y contacto.",
+    "Reggaetón & Dancehall artist desde Belén, Medellín. Press Kit, música, booking y contacto.",
   openGraph: {
     title: "PaulGZ | Electronic Press Kit 2026",
     description:
-      "Reggaetón & Dancehall artist. Press Kit, música, booking y contacto.",
+      "Reggaetón & Dancehall artist desde Belén, Medellín. Press Kit, música, booking y contacto.",
     type: "website",
+    url: "https://paulgz.com",
+    siteName: "PaulGZ",
+    locale: "es_CO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PaulGZ | EPK 2026",
+    description:
+      "Reggaetón & Dancehall · Belén // Medellín. Música, booking y contacto.",
   },
 };
 
@@ -65,7 +69,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body
-        className={`${inter.variable} ${spaceMono.variable} ${syncopate.variable} ${orientalDisplay.variable} antialiased cursor-default bg-black text-silver overflow-x-hidden`}
+        className={`${inter.variable} ${spaceMono.variable} ${syncopate.variable} antialiased cursor-default bg-black text-silver overflow-x-hidden`}
       >
         <script
           type="application/ld+json"
